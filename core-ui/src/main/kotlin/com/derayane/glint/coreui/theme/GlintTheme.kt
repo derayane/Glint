@@ -1,166 +1,159 @@
 package com.derayane.glint.coreui.theme
 
-import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
-import com.derayane.glint.coreui.tokens.*
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import com.derayane.glint.coreui.tokens.GlintShape
+import com.derayane.glint.coreui.tokens.GlintSpacing
+import com.derayane.glint.coreui.tokens.GlintTypography
+import com.derayane.glint.coreui.tokens.LocalGlintShape
+import com.derayane.glint.coreui.tokens.LocalGlintSpacing
+import com.derayane.glint.coreui.tokens.LocalGlintTypography
 
 /**
- * GlintTheme - Theme Wrapper untuk Glint Design System
- * 
- * Fungsi:
- * - Override MaterialTheme dengan custom tokens Glint
- * - Menerapkan color scheme, typography, dan shapes custom
- * - Mendukung dark mode otomatis
- * - Mengatur system bar colors sesuai theme
- * 
- * Keuntungan:
- * - Semua Material 3 components otomatis mengikuti styling Glint
- * - Centralized theming - ubah di satu tempat, apply ke semua komponen
- * - Konsistensi terjamin di seluruh aplikasi
- * - Easy maintenance dan rebrand
+ * Light color scheme for Glint theme
  */
-
-/**
- * Light Color Scheme menggunakan Glint Semantic Colors
- */
-private val GlintLightColorScheme = lightColorScheme(
-    primary = GlintSemanticColorsLight.primary,
-    onPrimary = GlintSemanticColorsLight.onPrimary,
-    primaryContainer = GlintSemanticColorsLight.primaryContainer,
-    onPrimaryContainer = GlintSemanticColorsLight.onPrimaryContainer,
+private val LightColorScheme = lightColorScheme(
+    primary = androidx.compose.ui.graphics.Color(0xFF6750A4),
+    onPrimary = androidx.compose.ui.graphics.Color(0xFFFFFFFF),
+    primaryContainer = androidx.compose.ui.graphics.Color(0xFFEADDFF),
+    onPrimaryContainer = androidx.compose.ui.graphics.Color(0xFF21005D),
     
-    secondary = GlintSemanticColorsLight.secondary,
-    onSecondary = GlintSemanticColorsLight.onSecondary,
-    secondaryContainer = GlintSemanticColorsLight.secondaryContainer,
-    onSecondaryContainer = GlintSemanticColorsLight.onSecondaryContainer,
+    secondary = androidx.compose.ui.graphics.Color(0xFF625B71),
+    onSecondary = androidx.compose.ui.graphics.Color(0xFFFFFFFF),
+    secondaryContainer = androidx.compose.ui.graphics.Color(0xFFE8DEF8),
+    onSecondaryContainer = androidx.compose.ui.graphics.Color(0xFF1D192B),
     
-    tertiary = GlintSemanticColorsLight.tertiary,
-    onTertiary = GlintSemanticColorsLight.onTertiary,
-    tertiaryContainer = GlintSemanticColorsLight.tertiaryContainer,
-    onTertiaryContainer = GlintSemanticColorsLight.onTertiaryContainer,
+    tertiary = androidx.compose.ui.graphics.Color(0xFF7D5260),
+    onTertiary = androidx.compose.ui.graphics.Color(0xFFFFFFFF),
+    tertiaryContainer = androidx.compose.ui.graphics.Color(0xFFFFD8E4),
+    onTertiaryContainer = androidx.compose.ui.graphics.Color(0xFF31111D),
     
-    error = GlintSemanticColorsLight.error,
-    onError = GlintSemanticColorsLight.onError,
-    errorContainer = GlintSemanticColorsLight.errorContainer,
-    onErrorContainer = GlintSemanticColorsLight.onErrorContainer,
+    error = androidx.compose.ui.graphics.Color(0xFFB3261E),
+    onError = androidx.compose.ui.graphics.Color(0xFFFFFFFF),
+    errorContainer = androidx.compose.ui.graphics.Color(0xFFF9DEDC),
+    onErrorContainer = androidx.compose.ui.graphics.Color(0xFF410E0B),
     
-    background = GlintSemanticColorsLight.background,
-    onBackground = GlintSemanticColorsLight.onBackground,
+    background = androidx.compose.ui.graphics.Color(0xFFFFFBFE),
+    onBackground = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
     
-    surface = GlintSemanticColorsLight.surface,
-    onSurface = GlintSemanticColorsLight.onSurface,
-    surfaceVariant = GlintSemanticColorsLight.surfaceVariant,
-    onSurfaceVariant = GlintSemanticColorsLight.onSurfaceVariant,
+    surface = androidx.compose.ui.graphics.Color(0xFFFFFBFE),
+    onSurface = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
+    surfaceVariant = androidx.compose.ui.graphics.Color(0xFFE7E0EC),
+    onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFF49454F),
     
-    outline = GlintSemanticColorsLight.outline,
-    outlineVariant = GlintSemanticColorsLight.outlineVariant,
-    
-    inverseSurface = GlintSemanticColorsLight.inverseSurface,
-    inverseOnSurface = GlintSemanticColorsLight.inverseOnSurface,
-    inversePrimary = GlintSemanticColorsLight.inversePrimary,
-    
-    scrim = GlintSemanticColorsLight.scrim,
+    outline = androidx.compose.ui.graphics.Color(0xFF79747E),
+    outlineVariant = androidx.compose.ui.graphics.Color(0xFFCAC4D0)
 )
 
 /**
- * Dark Color Scheme menggunakan Glint Semantic Colors
+ * Dark color scheme for Glint theme
  */
-private val GlintDarkColorScheme = darkColorScheme(
-    primary = GlintSemanticColorsDark.primary,
-    onPrimary = GlintSemanticColorsDark.onPrimary,
-    primaryContainer = GlintSemanticColorsDark.primaryContainer,
-    onPrimaryContainer = GlintSemanticColorsDark.onPrimaryContainer,
+private val DarkColorScheme = darkColorScheme(
+    primary = androidx.compose.ui.graphics.Color(0xFFD0BCFF),
+    onPrimary = androidx.compose.ui.graphics.Color(0xFF381E72),
+    primaryContainer = androidx.compose.ui.graphics.Color(0xFF4F378B),
+    onPrimaryContainer = androidx.compose.ui.graphics.Color(0xFFEADDFF),
     
-    secondary = GlintSemanticColorsDark.secondary,
-    onSecondary = GlintSemanticColorsDark.onSecondary,
-    secondaryContainer = GlintSemanticColorsDark.secondaryContainer,
-    onSecondaryContainer = GlintSemanticColorsDark.onSecondaryContainer,
+    secondary = androidx.compose.ui.graphics.Color(0xFFCCC2DC),
+    onSecondary = androidx.compose.ui.graphics.Color(0xFF332D41),
+    secondaryContainer = androidx.compose.ui.graphics.Color(0xFF4A4458),
+    onSecondaryContainer = androidx.compose.ui.graphics.Color(0xFFE8DEF8),
     
-    tertiary = GlintSemanticColorsDark.tertiary,
-    onTertiary = GlintSemanticColorsDark.onTertiary,
-    tertiaryContainer = GlintSemanticColorsDark.tertiaryContainer,
-    onTertiaryContainer = GlintSemanticColorsDark.onTertiaryContainer,
+    tertiary = androidx.compose.ui.graphics.Color(0xFFEFB8C8),
+    onTertiary = androidx.compose.ui.graphics.Color(0xFF492532),
+    tertiaryContainer = androidx.compose.ui.graphics.Color(0xFF633B48),
+    onTertiaryContainer = androidx.compose.ui.graphics.Color(0xFFFFD8E4),
     
-    error = GlintSemanticColorsDark.error,
-    onError = GlintSemanticColorsDark.onError,
-    errorContainer = GlintSemanticColorsDark.errorContainer,
-    onErrorContainer = GlintSemanticColorsDark.onErrorContainer,
+    error = androidx.compose.ui.graphics.Color(0xFFF2B8B5),
+    onError = androidx.compose.ui.graphics.Color(0xFF601410),
+    errorContainer = androidx.compose.ui.graphics.Color(0xFF8C1D18),
+    onErrorContainer = androidx.compose.ui.graphics.Color(0xFFF9DEDC),
     
-    background = GlintSemanticColorsDark.background,
-    onBackground = GlintSemanticColorsDark.onBackground,
+    background = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
+    onBackground = androidx.compose.ui.graphics.Color(0xFFE6E1E5),
     
-    surface = GlintSemanticColorsDark.surface,
-    onSurface = GlintSemanticColorsDark.onSurface,
-    surfaceVariant = GlintSemanticColorsDark.surfaceVariant,
-    onSurfaceVariant = GlintSemanticColorsDark.onSurfaceVariant,
+    surface = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
+    onSurface = androidx.compose.ui.graphics.Color(0xFFE6E1E5),
+    surfaceVariant = androidx.compose.ui.graphics.Color(0xFF49454F),
+    onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFFCAC4D0),
     
-    outline = GlintSemanticColorsDark.outline,
-    outlineVariant = GlintSemanticColorsDark.outlineVariant,
-    
-    inverseSurface = GlintSemanticColorsDark.inverseSurface,
-    inverseOnSurface = GlintSemanticColorsDark.inverseOnSurface,
-    inversePrimary = GlintSemanticColorsDark.inversePrimary,
-    
-    scrim = GlintSemanticColorsDark.scrim,
+    outline = androidx.compose.ui.graphics.Color(0xFF938F99),
+    outlineVariant = androidx.compose.ui.graphics.Color(0xFF49454F)
 )
 
 /**
- * GlintTheme Composable
+ * Main Glint theme composable
+ * Provides all Glint design tokens through CompositionLocals
  * 
- * Main theme wrapper yang harus dibungkus di root aplikasi
- * 
- * @param darkTheme Boolean untuk menggunakan dark theme. Default mengikuti system.
- * @param dynamicColor Boolean untuk menggunakan dynamic color (Android 12+). Default false.
- * @param content Composable content yang akan di-theme
- * 
- * Contoh penggunaan:
- * ```
- * @Composable
- * fun MyApp() {
- *     GlintTheme {
- *         // Your app content here
- *         Surface {
- *             Text("Hello Glint!")
- *         }
- *     }
- * }
- * ```
+ * @param darkTheme Whether to use dark theme colors
+ * @param typography Custom typography tokens (optional)
+ * @param spacing Custom spacing tokens (optional)
+ * @param shape Custom shape tokens (optional)
+ * @param content The content to be themed
  */
 @Composable
 fun GlintTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false,
+    typography: GlintTypography = GlintTypography(),
+    spacing: GlintSpacing = GlintSpacing(),
+    shape: GlintShape = GlintShape(),
     content: @Composable () -> Unit
 ) {
-    // Pilih color scheme berdasarkan theme
-    val colorScheme = when {
-        darkTheme -> GlintDarkColorScheme
-        else -> GlintLightColorScheme
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    
+    // Provide Glint design tokens through CompositionLocals
+    CompositionLocalProvider(
+        LocalGlintTypography provides typography,
+        LocalGlintSpacing provides spacing,
+        LocalGlintShape provides shape
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            content = content
+        )
     }
+}
 
-    // Update system bar colors
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
-        }
-    }
-
-    // Apply MaterialTheme dengan custom tokens
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = GlintTypography,
-        shapes = GlintShapes,
-        content = content
-    )
+/**
+ * Object to access Glint design tokens throughout the app
+ * Usage: GlintTheme.typography.bodyLarge, GlintTheme.spacing.md, etc.
+ */
+object GlintTheme {
+    /**
+     * Retrieves the current [GlintTypography] at the call site's position in the hierarchy.
+     */
+    val typography: GlintTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalGlintTypography.current
+    
+    /**
+     * Retrieves the current [GlintSpacing] at the call site's position in the hierarchy.
+     */
+    val spacing: GlintSpacing
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalGlintSpacing.current
+    
+    /**
+     * Retrieves the current [GlintShape] at the call site's position in the hierarchy.
+     */
+    val shape: GlintShape
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalGlintShape.current
+    
+    /**
+     * Retrieves the current Material3 ColorScheme for colors
+     * (Colors remain in MaterialTheme for now)
+     */
+    val colorScheme: androidx.compose.material3.ColorScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.colorScheme
 }

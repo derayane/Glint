@@ -1,238 +1,334 @@
 package com.derayane.glint.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import com.derayane.glint.coreui.theme.GlintTheme
-import com.derayane.glint.coreui.tokens.GlintComponents
-import com.derayane.glint.coreui.tokens.GlintSpacing
 
 /**
- * GlintButton - Custom Button Component dengan 3 variasi state
- * 
- * Variasi:
- * 1. Primary - Untuk aksi utama (filled button)
- * 2. Secondary - Untuk aksi sekunder (outlined button)
- * 3. Ghost - Untuk aksi tersier (text button)
- * 
- * Design Decisions:
- * - Semua dimensi menggunakan design tokens (GlintComponents.Button)
- * - Colors menggunakan MaterialTheme.colorScheme (auto light/dark mode)
- * - Shape menggunakan MaterialTheme.shapes
- * - Typography responsive berdasarkan size
- * 
- * Alasan pemilihan:
- * - Primary button menonjol untuk call-to-action utama
- * - Secondary button memberikan alternatif tanpa terlalu dominan
- * - Ghost button untuk aksi yang less important
- * - Konsisten dengan Material Design 3 button patterns
- */
-
-/**
- * Button Size enum untuk standardisasi ukuran
+ * Glint button size variants
  */
 enum class GlintButtonSize {
-    SMALL,
-    MEDIUM,
-    LARGE
+    Small,
+    Medium,
+    Large
 }
 
 /**
- * Internal function untuk mendapatkan height berdasarkan size
- * Menggunakan GlintComponents.Button tokens
- */
-private fun getButtonHeight(size: GlintButtonSize) = when (size) {
-    GlintButtonSize.SMALL -> GlintComponents.Button.heightSmall
-    GlintButtonSize.MEDIUM -> GlintComponents.Button.heightMedium
-    GlintButtonSize.LARGE -> GlintComponents.Button.heightLarge
-}
-
-/**
- * Internal function untuk mendapatkan padding berdasarkan size
- * Menggunakan GlintSpacing tokens
- */
-private fun getButtonPadding(size: GlintButtonSize): PaddingValues {
-    return when (size) {
-        GlintButtonSize.SMALL -> PaddingValues(
-            horizontal = GlintSpacing.md,
-            vertical = GlintSpacing.xs
-        )
-        GlintButtonSize.MEDIUM -> PaddingValues(
-            horizontal = GlintSpacing.lg,
-            vertical = GlintSpacing.md
-        )
-        GlintButtonSize.LARGE -> PaddingValues(
-            horizontal = GlintSpacing.xl,
-            vertical = GlintSpacing.lg
-        )
-    }
-}
-
-/**
- * GlintButton Primary - Filled button untuk aksi utama
+ * Primary Glint button using Glint design tokens
+ * Minimizes MaterialTheme dependencies and uses Glint tokens directly
  * 
- * @param text Text yang ditampilkan di button
- * @param onClick Callback ketika button diklik
- * @param modifier Modifier untuk customization
- * @param enabled State enabled/disabled button
- * @param size Ukuran button (SMALL, MEDIUM, LARGE)
+ * @param text Button text
+ * @param onClick Click handler
+ * @param modifier Modifier for the button
+ * @param enabled Whether the button is enabled
+ * @param size Button size variant
+ * @param leadingIcon Optional leading icon
+ * @param trailingIcon Optional trailing icon
+ * @param interactionSource MutableInteractionSource for handling interactions
  */
 @Composable
-fun GlintButtonPrimary(
+fun GlintButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    size: GlintButtonSize = GlintButtonSize.MEDIUM,
+    size: GlintButtonSize = GlintButtonSize.Medium,
+    leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = null,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
+    val spacing = GlintTheme.spacing
+    val typography = GlintTheme.typography
+    val shape = GlintTheme.shape
+    val colors = GlintTheme.colorScheme
+    
+    // Size-specific dimensions using Glint tokens
+    val (horizontalPadding, verticalPadding, textStyle, iconSize, buttonShape) = when (size) {
+        GlintButtonSize.Small -> {
+            Tuple5(
+                spacing.md,
+                spacing.sm,
+                typography.labelMedium,
+                spacing.Component.iconSizeSmall,
+                shape.Component.buttonSmall
+            )
+        }
+        GlintButtonSize.Medium -> {
+            Tuple5(
+                spacing.Component.buttonHorizontalPadding,
+                spacing.Component.buttonVerticalPadding,
+                typography.labelLarge,
+                spacing.Component.iconSize,
+                shape.Component.buttonDefault
+            )
+        }
+        GlintButtonSize.Large -> {
+            Tuple5(
+                spacing.lgPlus,
+                spacing.md,
+                typography.titleMedium,
+                spacing.Component.iconSizeLarge,
+                shape.Component.buttonLarge
+            )
+        }
+    }
+    
     Button(
         onClick = onClick,
-        modifier = modifier.height(getButtonHeight(size)),
+        modifier = modifier.defaultMinSize(minHeight = 40.dp),
         enabled = enabled,
+        shape = buttonShape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+            containerColor = colors.primary,
+            contentColor = colors.onPrimary,
+            disabledContainerColor = colors.surfaceVariant,
+            disabledContentColor = colors.onSurfaceVariant
         ),
-        contentPadding = getButtonPadding(size),
-        shape = MaterialTheme.shapes.small
+        contentPadding = PaddingValues(
+            horizontal = horizontalPadding,
+            vertical = verticalPadding
+        ),
+        interactionSource = interactionSource
     ) {
-        Text(
-            text = text,
-            style = when (size) {
-                GlintButtonSize.SMALL -> MaterialTheme.typography.labelSmall
-                GlintButtonSize.MEDIUM -> MaterialTheme.typography.labelLarge
-                GlintButtonSize.LARGE -> MaterialTheme.typography.titleMedium
-            }
-        )
-    }
-}
-
-/**
- * GlintButton Secondary - Outlined button untuk aksi sekunder
- * 
- * @param text Text yang ditampilkan di button
- * @param onClick Callback ketika button diklik
- * @param modifier Modifier untuk customization
- * @param enabled State enabled/disabled button
- * @param size Ukuran button (SMALL, MEDIUM, LARGE)
- */
-@Composable
-fun GlintButtonSecondary(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    size: GlintButtonSize = GlintButtonSize.MEDIUM,
-) {
-    OutlinedButton(
-        onClick = onClick,
-        modifier = modifier.height(getButtonHeight(size)),
-        enabled = enabled,
-        colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary,
-            disabledContainerColor = MaterialTheme.colorScheme.surface,
-            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-        ),
-        border = BorderStroke(
-            width = GlintComponents.Button.borderWidth,
-            color = if (enabled) MaterialTheme.colorScheme.outline 
-                   else MaterialTheme.colorScheme.onSurfaceVariant
-        ),
-        contentPadding = getButtonPadding(size),
-        shape = MaterialTheme.shapes.small
-    ) {
-        Text(
-            text = text,
-            style = when (size) {
-                GlintButtonSize.SMALL -> MaterialTheme.typography.labelSmall
-                GlintButtonSize.MEDIUM -> MaterialTheme.typography.labelLarge
-                GlintButtonSize.LARGE -> MaterialTheme.typography.titleMedium
-            }
-        )
-    }
-}
-
-/**
- * GlintButton Ghost - Text button untuk aksi tersier
- * 
- * @param text Text yang ditampilkan di button
- * @param onClick Callback ketika button diklik
- * @param modifier Modifier untuk customization
- * @param enabled State enabled/disabled button
- * @param size Ukuran button (SMALL, MEDIUM, LARGE)
- */
-@Composable
-fun GlintButtonGhost(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    size: GlintButtonSize = GlintButtonSize.MEDIUM,
-) {
-    TextButton(
-        onClick = onClick,
-        modifier = modifier.height(getButtonHeight(size)),
-        enabled = enabled,
-        colors = ButtonDefaults.textButtonColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary,
-            disabledContainerColor = MaterialTheme.colorScheme.surface,
-            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-        ),
-        contentPadding = getButtonPadding(size),
-        shape = MaterialTheme.shapes.small
-    ) {
-        Text(
-            text = text,
-            style = when (size) {
-                GlintButtonSize.SMALL -> MaterialTheme.typography.labelSmall
-                GlintButtonSize.MEDIUM -> MaterialTheme.typography.labelLarge
-                GlintButtonSize.LARGE -> MaterialTheme.typography.titleMedium
-            }
-        )
-    }
-}
-
-/**
- * Preview untuk semua variasi button
- */
-@Preview(name = "Light Mode", showBackground = true)
-@Composable
-private fun GlintButtonPreview() {
-    GlintTheme {
-        androidx.compose.foundation.layout.Column(
-            modifier = Modifier.padding(GlintSpacing.lg),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(GlintSpacing.md)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(spacing.Component.buttonIconSpacing),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Small Buttons", style = MaterialTheme.typography.titleSmall)
-            GlintButtonPrimary(text = "Primary", onClick = {}, size = GlintButtonSize.SMALL)
-            GlintButtonSecondary(text = "Secondary", onClick = {}, size = GlintButtonSize.SMALL)
-            GlintButtonGhost(text = "Ghost", onClick = {}, size = GlintButtonSize.SMALL)
+            leadingIcon?.let { icon ->
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(iconSize)
+                )
+            }
             
-            Text("Medium Buttons", style = MaterialTheme.typography.titleSmall)
-            GlintButtonPrimary(text = "Primary", onClick = {})
-            GlintButtonSecondary(text = "Secondary", onClick = {})
-            GlintButtonGhost(text = "Ghost", onClick = {})
+            Text(
+                text = text,
+                style = textStyle
+            )
             
-            Text("Large Buttons", style = MaterialTheme.typography.titleSmall)
-            GlintButtonPrimary(text = "Primary", onClick = {}, size = GlintButtonSize.LARGE)
-            GlintButtonSecondary(text = "Secondary", onClick = {}, size = GlintButtonSize.LARGE)
-            GlintButtonGhost(text = "Ghost", onClick = {}, size = GlintButtonSize.LARGE)
-            
-            Text("Disabled State", style = MaterialTheme.typography.titleSmall)
-            GlintButtonPrimary(text = "Disabled", onClick = {}, enabled = false)
+            trailingIcon?.let { icon ->
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(iconSize)
+                )
+            }
         }
     }
 }
+
+/**
+ * Outlined Glint button using Glint design tokens
+ */
+@Composable
+fun GlintOutlinedButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    size: GlintButtonSize = GlintButtonSize.Medium,
+    leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = null,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+) {
+    val spacing = GlintTheme.spacing
+    val typography = GlintTheme.typography
+    val shape = GlintTheme.shape
+    val colors = GlintTheme.colorScheme
+    
+    val (horizontalPadding, verticalPadding, textStyle, iconSize, buttonShape) = when (size) {
+        GlintButtonSize.Small -> {
+            Tuple5(
+                spacing.md,
+                spacing.sm,
+                typography.labelMedium,
+                spacing.Component.iconSizeSmall,
+                shape.Component.buttonSmall
+            )
+        }
+        GlintButtonSize.Medium -> {
+            Tuple5(
+                spacing.Component.buttonHorizontalPadding,
+                spacing.Component.buttonVerticalPadding,
+                typography.labelLarge,
+                spacing.Component.iconSize,
+                shape.Component.buttonDefault
+            )
+        }
+        GlintButtonSize.Large -> {
+            Tuple5(
+                spacing.lgPlus,
+                spacing.md,
+                typography.titleMedium,
+                spacing.Component.iconSizeLarge,
+                shape.Component.buttonLarge
+            )
+        }
+    }
+    
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier.defaultMinSize(minHeight = 40.dp),
+        enabled = enabled,
+        shape = buttonShape,
+        colors = ButtonDefaults.outlinedButtonColors(
+            contentColor = colors.primary,
+            disabledContentColor = colors.onSurfaceVariant
+        ),
+        border = BorderStroke(1.dp, if (enabled) colors.outline else colors.outlineVariant),
+        contentPadding = PaddingValues(
+            horizontal = horizontalPadding,
+            vertical = verticalPadding
+        ),
+        interactionSource = interactionSource
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(spacing.Component.buttonIconSpacing),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            leadingIcon?.let { icon ->
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(iconSize)
+                )
+            }
+            
+            Text(
+                text = text,
+                style = textStyle
+            )
+            
+            trailingIcon?.let { icon ->
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(iconSize)
+                )
+            }
+        }
+    }
+}
+
+/**
+ * Text Glint button using Glint design tokens
+ */
+@Composable
+fun GlintTextButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    size: GlintButtonSize = GlintButtonSize.Medium,
+    leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = null,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+) {
+    val spacing = GlintTheme.spacing
+    val typography = GlintTheme.typography
+    val shape = GlintTheme.shape
+    val colors = GlintTheme.colorScheme
+    
+    val (horizontalPadding, verticalPadding, textStyle, iconSize, buttonShape) = when (size) {
+        GlintButtonSize.Small -> {
+            Tuple5(
+                spacing.sm,
+                spacing.xs,
+                typography.labelMedium,
+                spacing.Component.iconSizeSmall,
+                shape.Component.buttonSmall
+            )
+        }
+        GlintButtonSize.Medium -> {
+            Tuple5(
+                spacing.md,
+                spacing.sm,
+                typography.labelLarge,
+                spacing.Component.iconSize,
+                shape.Component.buttonDefault
+            )
+        }
+        GlintButtonSize.Large -> {
+            Tuple5(
+                spacing.lg,
+                spacing.sm,
+                typography.titleMedium,
+                spacing.Component.iconSizeLarge,
+                shape.Component.buttonLarge
+            )
+        }
+    }
+    
+    TextButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        shape = buttonShape,
+        colors = ButtonDefaults.textButtonColors(
+            contentColor = colors.primary,
+            disabledContentColor = colors.onSurfaceVariant
+        ),
+        contentPadding = PaddingValues(
+            horizontal = horizontalPadding,
+            vertical = verticalPadding
+        ),
+        interactionSource = interactionSource
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(spacing.Component.buttonIconSpacing),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            leadingIcon?.let { icon ->
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(iconSize)
+                )
+            }
+            
+            Text(
+                text = text,
+                style = textStyle
+            )
+            
+            trailingIcon?.let { icon ->
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(iconSize)
+                )
+            }
+        }
+    }
+}
+
+/**
+ * Helper data class to hold 5 values
+ */
+private data class Tuple5<A, B, C, D, E>(
+    val first: A,
+    val second: B,
+    val third: C,
+    val fourth: D,
+    val fifth: E
+)

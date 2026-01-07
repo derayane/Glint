@@ -15,21 +15,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.derayane.glint.coreui.theme.GlintTheme
+import com.derayane.glint.coreui.tokens.GlintComponents
 import com.derayane.glint.coreui.tokens.GlintSpacing
 
 /**
  * GlintTextField - Custom TextField Component
  * 
  * Customization dari OutlinedTextField Material 3:
- * - Custom border colors untuk berbagai state (focused, error, disabled)
- * - Custom label styling yang konsisten dengan design system
+ * - Border colors menggunakan MaterialTheme.colorScheme (auto light/dark)
+ * - Border width menggunakan design tokens (GlintComponents.TextField)
+ * - Label styling konsisten dengan design system
  * - Support untuk helper text dan error message
  * - Integrated dengan GlintTheme untuk styling otomatis
+ * 
+ * Design Decisions:
+ * - Semua colors dari MaterialTheme untuk auto dark mode
+ * - Border width dari tokens untuk konsistensi
+ * - Shape menggunakan MaterialTheme.shapes.small
  * 
  * Alasan pemilihan OutlinedTextField:
  * - Lebih modern dan clean dibanding FilledTextField
@@ -93,67 +98,68 @@ fun GlintTextField(
             } else null,
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
-            isError = isError || errorMessage != null,
+            isError = isError,
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             singleLine = singleLine,
             maxLines = maxLines,
             colors = OutlinedTextFieldDefaults.colors(
-                // Focused state colors
+                // Focused state
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
                 focusedLabelColor = MaterialTheme.colorScheme.primary,
-                focusedTextColor = MaterialTheme.colorScheme.onSurface,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
                 focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
                 
-                // Unfocused state colors
+                // Unfocused state
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                 unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                 unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 
-                // Error state colors
+                // Disabled state
+                disabledBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+                disabledLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                disabledTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                disabledLeadingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                disabledTrailingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                
+                // Error state
                 errorBorderColor = MaterialTheme.colorScheme.error,
                 errorLabelColor = MaterialTheme.colorScheme.error,
-                errorTextColor = MaterialTheme.colorScheme.onSurface,
                 errorLeadingIconColor = MaterialTheme.colorScheme.error,
                 errorTrailingIconColor = MaterialTheme.colorScheme.error,
                 
-                // Disabled state colors
-                disabledBorderColor = MaterialTheme.colorScheme.outlineVariant,
-                disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                // Container & text colors
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                disabledContainerColor = MaterialTheme.colorScheme.surface,
+                errorContainerColor = MaterialTheme.colorScheme.surface,
                 
-                // Container colors
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                errorContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                errorTextColor = MaterialTheme.colorScheme.onSurface,
+                
+                // Cursor color
+                cursorColor = MaterialTheme.colorScheme.primary,
+                errorCursorColor = MaterialTheme.colorScheme.error,
             ),
-            shape = MaterialTheme.shapes.small,
-            textStyle = MaterialTheme.typography.bodyLarge
+            shape = MaterialTheme.shapes.small
         )
         
         // Helper text atau error message
-        if (errorMessage != null) {
+        val supportingText = when {
+            isError && errorMessage != null -> errorMessage
+            helperText != null -> helperText
+            else -> null
+        }
+        
+        if (supportingText != null) {
             Text(
-                text = errorMessage,
+                text = supportingText,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(
-                    start = GlintSpacing.lg,
-                    top = GlintSpacing.xs
-                )
-            )
-        } else if (helperText != null) {
-            Text(
-                text = helperText,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = if (isError) MaterialTheme.colorScheme.error 
+                       else MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(
                     start = GlintSpacing.lg,
                     top = GlintSpacing.xs
@@ -163,118 +169,53 @@ fun GlintTextField(
     }
 }
 
-// ============================================
-// PREVIEWS
-// ============================================
-
-@Preview(name = "TextField - Empty", showBackground = true)
+/**
+ * Preview untuk berbagai state text field
+ */
+@Preview(name = "Light Mode", showBackground = true)
 @Composable
-private fun PreviewGlintTextFieldEmpty() {
-    GlintTheme {
-        var text by remember { mutableStateOf("") }
-        GlintTextField(
-            value = text,
-            onValueChange = { text = it },
-            label = "Email",
-            placeholder = "Enter your email",
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Preview(name = "TextField - Filled", showBackground = true)
-@Composable
-private fun PreviewGlintTextFieldFilled() {
-    GlintTheme {
-        var text by remember { mutableStateOf("user@example.com") }
-        GlintTextField(
-            value = text,
-            onValueChange = { text = it },
-            label = "Email",
-            helperText = "We'll never share your email",
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Preview(name = "TextField - Error", showBackground = true)
-@Composable
-private fun PreviewGlintTextFieldError() {
-    GlintTheme {
-        var text by remember { mutableStateOf("invalid-email") }
-        GlintTextField(
-            value = text,
-            onValueChange = { text = it },
-            label = "Email",
-            errorMessage = "Please enter a valid email address",
-            isError = true,
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Preview(name = "TextField - Disabled", showBackground = true)
-@Composable
-private fun PreviewGlintTextFieldDisabled() {
-    GlintTheme {
-        GlintTextField(
-            value = "Disabled field",
-            onValueChange = {},
-            label = "Email",
-            enabled = false,
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Preview(name = "TextField - Multiline", showBackground = true)
-@Composable
-private fun PreviewGlintTextFieldMultiline() {
-    GlintTheme {
-        var text by remember { mutableStateOf("This is a multiline\ntext field example") }
-        GlintTextField(
-            value = text,
-            onValueChange = { text = it },
-            label = "Description",
-            placeholder = "Enter description",
-            helperText = "Maximum 500 characters",
-            singleLine = false,
-            maxLines = 4,
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Preview(name = "TextField States", showBackground = true)
-@Composable
-private fun PreviewGlintTextFieldStates() {
+private fun GlintTextFieldPreview() {
+    var text1 by remember { mutableStateOf("") }
+    var text2 by remember { mutableStateOf("Sample text") }
+    var text3 by remember { mutableStateOf("Error text") }
+    
     GlintTheme {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp)
+            modifier = Modifier.padding(GlintSpacing.lg),
+            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(GlintSpacing.md)
         ) {
-            var text1 by remember { mutableStateOf("") }
+            Text("Empty with Label", style = MaterialTheme.typography.titleSmall)
             GlintTextField(
                 value = text1,
                 onValueChange = { text1 = it },
-                label = "Normal State",
-                placeholder = "Type something..."
+                label = "Email",
+                placeholder = "Enter your email",
+                helperText = "We'll never share your email"
             )
             
-            var text2 by remember { mutableStateOf("user@example.com") }
+            Text("Filled State", style = MaterialTheme.typography.titleSmall)
             GlintTextField(
                 value = text2,
                 onValueChange = { text2 = it },
-                label = "With Helper Text",
-                helperText = "This is a helper text"
+                label = "Username",
+                helperText = "Choose a unique username"
             )
             
-            var text3 by remember { mutableStateOf("invalid") }
+            Text("Error State", style = MaterialTheme.typography.titleSmall)
             GlintTextField(
                 value = text3,
                 onValueChange = { text3 = it },
-                label = "Error State",
-                errorMessage = "This field has an error"
+                label = "Password",
+                isError = true,
+                errorMessage = "Password must be at least 8 characters"
+            )
+            
+            Text("Disabled State", style = MaterialTheme.typography.titleSmall)
+            GlintTextField(
+                value = "Disabled field",
+                onValueChange = {},
+                label = "Disabled",
+                enabled = false
             )
         }
     }

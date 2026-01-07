@@ -1,179 +1,84 @@
 package com.derayane.glint.coreui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.Shapes
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import com.derayane.glint.coreui.tokens.*
+import androidx.compose.ui.graphics.Color
 
-/**
- * Glint Theme using semantic color tokens
- */
-
-// Light Color Scheme using semantic tokens
-private val LightColorScheme = ColorScheme(
-    primary = GlintSemanticColorsLight.primary,
-    onPrimary = GlintSemanticColorsLight.onPrimary,
-    primaryContainer = GlintSemanticColorsLight.primaryContainer,
-    onPrimaryContainer = GlintSemanticColorsLight.onPrimaryContainer,
-    inversePrimary = GlintSemanticColorsLight.inversePrimary,
-    
-    secondary = GlintSemanticColorsLight.secondary,
-    onSecondary = GlintSemanticColorsLight.onSecondary,
-    secondaryContainer = GlintSemanticColorsLight.secondaryContainer,
-    onSecondaryContainer = GlintSemanticColorsLight.onSecondaryContainer,
-    
-    tertiary = GlintSemanticColorsLight.tertiary,
-    onTertiary = GlintSemanticColorsLight.onTertiary,
-    tertiaryContainer = GlintSemanticColorsLight.tertiaryContainer,
-    onTertiaryContainer = GlintSemanticColorsLight.onTertiaryContainer,
-    
-    background = GlintSemanticColorsLight.background,
-    onBackground = GlintSemanticColorsLight.onBackground,
-    
-    surface = GlintSemanticColorsLight.surface,
-    onSurface = GlintSemanticColorsLight.onSurface,
-    surfaceVariant = GlintSemanticColorsLight.surfaceVariant,
-    onSurfaceVariant = GlintSemanticColorsLight.onSurfaceVariant,
-    surfaceTint = GlintSemanticColorsLight.primary,
-    inverseSurface = GlintSemanticColorsLight.inverseSurface,
-    inverseOnSurface = GlintSemanticColorsLight.inverseOnSurface,
-    
-    error = GlintSemanticColorsLight.error,
-    onError = GlintSemanticColorsLight.onError,
-    errorContainer = GlintSemanticColorsLight.errorContainer,
-    onErrorContainer = GlintSemanticColorsLight.onErrorContainer,
-    
-    outline = GlintSemanticColorsLight.outline,
-    outlineVariant = GlintSemanticColorsLight.outlineVariant,
-    scrim = GlintSemanticColorsLight.scrim,
-    
-    surfaceBright = GlintNeutralColors.white,
-    surfaceDim = GlintNeutralColors.componentBackground,
-    surfaceContainer = GlintNeutralColors.componentBackground,
-    surfaceContainerHigh = GlintNeutralColors.foreground,
-    surfaceContainerHighest = GlintNeutralColors.disabledBackground,
-    surfaceContainerLow = GlintNeutralColors.background,
-    surfaceContainerLowest = GlintNeutralColors.white
+private val LightColorScheme = lightColorScheme(
+    primary = Color(0xFF6750A4),
+    onPrimary = Color(0xFFFFFFFF),
+    primaryContainer = Color(0xFFEADDFF),
+    onPrimaryContainer = Color(0xFF21005D),
+    secondary = Color(0xFF625B71),
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = Color(0xFFE8DEF8),
+    onSecondaryContainer = Color(0xFF1D192B),
+    tertiary = Color(0xFF7D5260),
+    onTertiary = Color(0xFFFFFFFF),
+    tertiaryContainer = Color(0xFFFFD8E4),
+    onTertiaryContainer = Color(0xFF31111D),
+    error = Color(0xFFB3261E),
+    onError = Color(0xFFFFFFFF),
+    errorContainer = Color(0xFFF9DEDC),
+    onErrorContainer = Color(0xFF410E0B),
+    background = Color(0xFFFFFBFE),
+    onBackground = Color(0xFF1C1B1F),
+    surface = Color(0xFFFFFBFE),
+    onSurface = Color(0xFF1C1B1F),
+    surfaceVariant = Color(0xFFE7E0EC),
+    onSurfaceVariant = Color(0xFF49454F),
+    outline = Color(0xFF79747E),
+    outlineVariant = Color(0xFFCAC4D0),
+    scrim = Color(0xFF000000),
+    inverseSurface = Color(0xFF313033),
+    inverseOnSurface = Color(0xFFF4EFF4),
+    inversePrimary = Color(0xFFD0BCFF)
 )
 
-// Dark Color Scheme using semantic tokens
-private val DarkColorScheme = ColorScheme(
-    primary = GlintSemanticColorsDark.primary,
-    onPrimary = GlintSemanticColorsDark.onPrimary,
-    primaryContainer = GlintSemanticColorsDark.primaryContainer,
-    onPrimaryContainer = GlintSemanticColorsDark.onPrimaryContainer,
-    inversePrimary = GlintSemanticColorsDark.inversePrimary,
-    
-    secondary = GlintSemanticColorsDark.secondary,
-    onSecondary = GlintSemanticColorsDark.onSecondary,
-    secondaryContainer = GlintSemanticColorsDark.secondaryContainer,
-    onSecondaryContainer = GlintSemanticColorsDark.onSecondaryContainer,
-    
-    tertiary = GlintSemanticColorsDark.tertiary,
-    onTertiary = GlintSemanticColorsDark.onTertiary,
-    tertiaryContainer = GlintSemanticColorsDark.tertiaryContainer,
-    onTertiaryContainer = GlintSemanticColorsDark.onTertiaryContainer,
-    
-    background = GlintSemanticColorsDark.background,
-    onBackground = GlintSemanticColorsDark.onBackground,
-    
-    surface = GlintSemanticColorsDark.surface,
-    onSurface = GlintSemanticColorsDark.onSurface,
-    surfaceVariant = GlintSemanticColorsDark.surfaceVariant,
-    onSurfaceVariant = GlintSemanticColorsDark.onSurfaceVariant,
-    surfaceTint = GlintSemanticColorsDark.primary,
-    inverseSurface = GlintSemanticColorsDark.inverseSurface,
-    inverseOnSurface = GlintSemanticColorsDark.inverseOnSurface,
-    
-    error = GlintSemanticColorsDark.error,
-    onError = GlintSemanticColorsDark.onError,
-    errorContainer = GlintSemanticColorsDark.errorContainer,
-    onErrorContainer = GlintSemanticColorsDark.onErrorContainer,
-    
-    outline = GlintSemanticColorsDark.outline,
-    outlineVariant = GlintSemanticColorsDark.outlineVariant,
-    scrim = GlintSemanticColorsDark.scrim,
-    
-    surfaceBright = GlintGreyscaleJetBlack.minus30,
-    surfaceDim = GlintGreyscaleJetBlack.base,
-    surfaceContainer = GlintGreyscaleJetBlack.minus20,
-    surfaceContainerHigh = GlintGreyscaleJetBlack.minus30,
-    surfaceContainerHighest = GlintGreyscaleJetBlack.minus40,
-    surfaceContainerLow = GlintGreyscaleJetBlack.minus10,
-    surfaceContainerLowest = GlintGreyscaleJetBlack.base
+private val DarkColorScheme = darkColorScheme(
+    primary = Color(0xFFD0BCFF),
+    onPrimary = Color(0xFF381E72),
+    primaryContainer = Color(0xFF4F378B),
+    onPrimaryContainer = Color(0xFFEADDFF),
+    secondary = Color(0xFFCCC2DC),
+    onSecondary = Color(0xFF332D41),
+    secondaryContainer = Color(0xFF4A4458),
+    onSecondaryContainer = Color(0xFFE8DEF8),
+    tertiary = Color(0xFFEFB8C8),
+    onTertiary = Color(0xFF492532),
+    tertiaryContainer = Color(0xFF633B48),
+    onTertiaryContainer = Color(0xFFFFD8E4),
+    error = Color(0xFFF2B8B5),
+    onError = Color(0xFF601410),
+    errorContainer = Color(0xFF8C1D18),
+    onErrorContainer = Color(0xFFF9DEDC),
+    background = Color(0xFF1C1B1F),
+    onBackground = Color(0xFFE6E1E5),
+    surface = Color(0xFF1C1B1F),
+    onSurface = Color(0xFFE6E1E5),
+    surfaceVariant = Color(0xFF49454F),
+    onSurfaceVariant = Color(0xFFCAC4D0),
+    outline = Color(0xFF938F99),
+    outlineVariant = Color(0xFF49454F),
+    scrim = Color(0xFF000000),
+    inverseSurface = Color(0xFFE6E1E5),
+    inverseOnSurface = Color(0xFF313033),
+    inversePrimary = Color(0xFF6750A4)
 )
 
-// Spacing tokens
-data class GlintSpacing(
-    val extraSmall: Dp = 4.dp,
-    val small: Dp = 8.dp,
-    val medium: Dp = 16.dp,
-    val large: Dp = 24.dp,
-    val extraLarge: Dp = 32.dp,
-    val huge: Dp = 48.dp
-)
-
-// Shape tokens
-val GlintShapes = Shapes(
-    extraSmall = RoundedCornerShape(4.dp),
-    small = RoundedCornerShape(8.dp),
-    medium = RoundedCornerShape(12.dp),
-    large = RoundedCornerShape(16.dp),
-    extraLarge = RoundedCornerShape(24.dp)
-)
-
-// Composition locals for Glint tokens
-val LocalGlintTypography = staticCompositionLocalOf { GlintTypographyTokens() }
-val LocalGlintSpacing = staticCompositionLocalOf { GlintSpacing() }
-val LocalGlintShapes = staticCompositionLocalOf { GlintShapes }
-val LocalGlintColorScheme = staticCompositionLocalOf { LightColorScheme }
-
-/**
- * GlintTheme object to access theme tokens
- */
-object GlintTheme {
-    val typography: GlintTypographyTokens
-        @Composable
-        get() = LocalGlintTypography.current
-    
-    val spacing: GlintSpacing
-        @Composable
-        get() = LocalGlintSpacing.current
-    
-    val shape: Shapes
-        @Composable
-        get() = LocalGlintShapes.current
-    
-    val colorScheme: ColorScheme
-        @Composable
-        get() = LocalGlintColorScheme.current
-}
-
-/**
- * GlintTheme composable
- */
 @Composable
 fun GlintTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    typography: GlintTypographyTokens = GlintTypographyTokens(),
-    spacing: GlintSpacing = GlintSpacing(),
-    shapes: Shapes = GlintShapes,
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
-    
-    CompositionLocalProvider(
-        LocalGlintTypography provides typography,
-        LocalGlintSpacing provides spacing,
-        LocalGlintShapes provides shapes,
-        LocalGlintColorScheme provides colorScheme
-    ) {
-        content()
-    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography,
+        content = content
+    )
 }

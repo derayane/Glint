@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.derayane.glint.components.*
@@ -18,18 +19,24 @@ import com.derayane.glint.coreui.tokens.GlintSpacing
  * MainActivity - Catalog App untuk preview komponen Glint
  * 
  * Menampilkan semua komponen Glint dalam satu layar scrollable
- * untuk memudahkan developer melihat dan testing komponen
+ * untuk memudahkan developer melihat dan testing komponen.
+ * Includes dark/light mode toggle for testing themes.
  */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            GlintTheme {
+            var isDarkMode by remember { mutableStateOf(false) }
+            
+            GlintTheme(darkTheme = isDarkMode) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CatalogScreen()
+                    CatalogScreen(
+                        isDarkMode = isDarkMode,
+                        onThemeToggle = { isDarkMode = it }
+                    )
                 }
             }
         }
@@ -37,7 +44,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun CatalogScreen() {
+fun CatalogScreen(
+    isDarkMode: Boolean,
+    onThemeToggle: (Boolean) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,18 +55,59 @@ fun CatalogScreen() {
             .padding(GlintSpacing.lg),
         verticalArrangement = Arrangement.spacedBy(GlintSpacing.xl)
     ) {
-        // Header
-        Text(
-            text = "Glint Design System Catalog",
-            style = MaterialTheme.typography.headlineLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
+        // Theme Toggle at the top
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text(
+                    text = "Glint Design System Catalog",
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = "Explore all available components",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
         
-        Text(
-            text = "Explore all available components",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        // Dark/Light Mode Toggle Section
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(GlintSpacing.md),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = if (isDarkMode) "Dark Mode" else "Light Mode",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = "Toggle to switch theme",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                GlintToggle(
+                    checked = isDarkMode,
+                    onCheckedChange = onThemeToggle,
+                    size = GlintToggleSize.Large
+                )
+            }
+        }
         
         Divider(modifier = Modifier.padding(vertical = GlintSpacing.sm))
         
@@ -70,6 +121,13 @@ fun CatalogScreen() {
         // TextField Section
         ComponentSection(title = "Text Fields") {
             TextFieldsPreview()
+        }
+        
+        Divider()
+        
+        // Toggle Section
+        ComponentSection(title = "Toggles") {
+            TogglePreview()
         }
         
         Divider()
@@ -121,18 +179,18 @@ fun ButtonsPreview() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(GlintSpacing.sm)
         ) {
-            GlintButtonPrimary(
+            GlintPrimaryButton(
                 text = "Primary",
                 onClick = {},
                 modifier = Modifier.weight(1f)
             )
-            GlintButtonSecondary(
+            GlintSecondaryButton(
                 text = "Secondary",
                 onClick = {},
                 modifier = Modifier.weight(1f)
             )
-            GlintButtonGhost(
-                text = "Ghost",
+            GlintTextButton(
+                text = "Text",
                 onClick = {},
                 modifier = Modifier.weight(1f)
             )
@@ -148,22 +206,22 @@ fun ButtonsPreview() {
         Column(
             verticalArrangement = Arrangement.spacedBy(GlintSpacing.sm)
         ) {
-            GlintButtonPrimary(
+            GlintPrimaryButton(
                 text = "Small Button",
                 onClick = {},
-                size = GlintButtonSize.SMALL,
+                size = GlintButtonSize.Small,
                 modifier = Modifier.fillMaxWidth()
             )
-            GlintButtonPrimary(
+            GlintPrimaryButton(
                 text = "Medium Button",
                 onClick = {},
-                size = GlintButtonSize.MEDIUM,
+                size = GlintButtonSize.Medium,
                 modifier = Modifier.fillMaxWidth()
             )
-            GlintButtonPrimary(
+            GlintPrimaryButton(
                 text = "Large Button",
                 onClick = {},
-                size = GlintButtonSize.LARGE,
+                size = GlintButtonSize.Large,
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -179,18 +237,161 @@ fun ButtonsPreview() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(GlintSpacing.sm)
         ) {
-            GlintButtonPrimary(
+            GlintPrimaryButton(
                 text = "Enabled",
                 onClick = {},
                 enabled = true,
                 modifier = Modifier.weight(1f)
             )
-            GlintButtonPrimary(
+            GlintPrimaryButton(
                 text = "Disabled",
                 onClick = {},
                 enabled = false,
                 modifier = Modifier.weight(1f)
             )
+        }
+    }
+}
+
+@Composable
+fun TogglePreview() {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(GlintSpacing.md)
+    ) {
+        // Toggle variants
+        Text(
+            text = "Toggle States",
+            style = MaterialTheme.typography.titleMedium
+        )
+        
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(GlintSpacing.lg),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(GlintSpacing.sm)
+            ) {
+                Text("Off", style = MaterialTheme.typography.bodySmall)
+                var toggleOff by remember { mutableStateOf(false) }
+                GlintToggle(
+                    checked = toggleOff,
+                    onCheckedChange = { toggleOff = it }
+                )
+            }
+            
+            Column(
+                verticalArrangement = Arrangement.spacedBy(GlintSpacing.sm)
+            ) {
+                Text("On", style = MaterialTheme.typography.bodySmall)
+                var toggleOn by remember { mutableStateOf(true) }
+                GlintToggle(
+                    checked = toggleOn,
+                    onCheckedChange = { toggleOn = it }
+                )
+            }
+            
+            Column(
+                verticalArrangement = Arrangement.spacedBy(GlintSpacing.sm)
+            ) {
+                Text("Disabled", style = MaterialTheme.typography.bodySmall)
+                GlintToggle(
+                    checked = false,
+                    onCheckedChange = {},
+                    enabled = false
+                )
+            }
+        }
+        
+        // Toggle sizes
+        Text(
+            text = "Toggle Sizes",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.padding(top = GlintSpacing.md)
+        )
+        
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(GlintSpacing.lg),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(GlintSpacing.sm),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text("Small", style = MaterialTheme.typography.bodySmall)
+                var toggleSmall by remember { mutableStateOf(true) }
+                GlintToggle(
+                    checked = toggleSmall,
+                    onCheckedChange = { toggleSmall = it },
+                    size = GlintToggleSize.Small
+                )
+            }
+            
+            Column(
+                verticalArrangement = Arrangement.spacedBy(GlintSpacing.sm),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text("Medium", style = MaterialTheme.typography.bodySmall)
+                var toggleMedium by remember { mutableStateOf(true) }
+                GlintToggle(
+                    checked = toggleMedium,
+                    onCheckedChange = { toggleMedium = it },
+                    size = GlintToggleSize.Medium
+                )
+            }
+            
+            Column(
+                verticalArrangement = Arrangement.spacedBy(GlintSpacing.sm),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text("Large", style = MaterialTheme.typography.bodySmall)
+                var toggleLarge by remember { mutableStateOf(true) }
+                GlintToggle(
+                    checked = toggleLarge,
+                    onCheckedChange = { toggleLarge = it },
+                    size = GlintToggleSize.Large
+                )
+            }
+        }
+        
+        // Interactive example
+        Text(
+            text = "Interactive Example",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.padding(top = GlintSpacing.md)
+        )
+        
+        var featureEnabled by remember { mutableStateOf(false) }
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(GlintSpacing.md),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = "Enable Notifications",
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Text(
+                        text = if (featureEnabled) "You will receive notifications" else "Notifications are disabled",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                GlintToggle(
+                    checked = featureEnabled,
+                    onCheckedChange = { featureEnabled = it }
+                )
+            }
         }
     }
 }
@@ -389,12 +590,12 @@ fun CardsPreview() {
                     .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                GlintButtonPrimary(
+                GlintPrimaryButton(
                     text = "View Details",
                     onClick = {},
                     modifier = Modifier.weight(1f)
                 )
-                GlintButtonSecondary(
+                GlintSecondaryButton(
                     text = "Share",
                     onClick = {},
                     modifier = Modifier.weight(1f)

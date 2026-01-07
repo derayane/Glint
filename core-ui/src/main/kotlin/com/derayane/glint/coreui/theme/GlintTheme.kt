@@ -1,84 +1,164 @@
 package com.derayane.glint.coreui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
+import com.derayane.glint.coreui.tokens.*
 
+/**
+ * Light color scheme using Glint semantic color tokens
+ */
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF6750A4),
-    onPrimary = Color(0xFFFFFFFF),
-    primaryContainer = Color(0xFFEADDFF),
-    onPrimaryContainer = Color(0xFF21005D),
-    secondary = Color(0xFF625B71),
-    onSecondary = Color(0xFFFFFFFF),
-    secondaryContainer = Color(0xFFE8DEF8),
-    onSecondaryContainer = Color(0xFF1D192B),
-    tertiary = Color(0xFF7D5260),
-    onTertiary = Color(0xFFFFFFFF),
-    tertiaryContainer = Color(0xFFFFD8E4),
-    onTertiaryContainer = Color(0xFF31111D),
-    error = Color(0xFFB3261E),
-    onError = Color(0xFFFFFFFF),
-    errorContainer = Color(0xFFF9DEDC),
-    onErrorContainer = Color(0xFF410E0B),
-    background = Color(0xFFFFFBFE),
-    onBackground = Color(0xFF1C1B1F),
-    surface = Color(0xFFFFFBFE),
-    onSurface = Color(0xFF1C1B1F),
-    surfaceVariant = Color(0xFFE7E0EC),
-    onSurfaceVariant = Color(0xFF49454F),
-    outline = Color(0xFF79747E),
-    outlineVariant = Color(0xFFCAC4D0),
-    scrim = Color(0xFF000000),
-    inverseSurface = Color(0xFF313033),
-    inverseOnSurface = Color(0xFFF4EFF4),
-    inversePrimary = Color(0xFFD0BCFF)
+    primary = GlintSemanticColorsLight.primary,
+    onPrimary = GlintSemanticColorsLight.onPrimary,
+    primaryContainer = GlintSemanticColorsLight.primaryContainer,
+    onPrimaryContainer = GlintSemanticColorsLight.onPrimaryContainer,
+    secondary = GlintSemanticColorsLight.secondary,
+    onSecondary = GlintSemanticColorsLight.onSecondary,
+    secondaryContainer = GlintSemanticColorsLight.secondaryContainer,
+    onSecondaryContainer = GlintSemanticColorsLight.onSecondaryContainer,
+    tertiary = GlintSemanticColorsLight.tertiary,
+    onTertiary = GlintSemanticColorsLight.onTertiary,
+    tertiaryContainer = GlintSemanticColorsLight.tertiaryContainer,
+    onTertiaryContainer = GlintSemanticColorsLight.onTertiaryContainer,
+    error = GlintSemanticColorsLight.error,
+    onError = GlintSemanticColorsLight.onError,
+    errorContainer = GlintSemanticColorsLight.errorContainer,
+    onErrorContainer = GlintSemanticColorsLight.onErrorContainer,
+    background = GlintSemanticColorsLight.background,
+    onBackground = GlintSemanticColorsLight.onBackground,
+    surface = GlintSemanticColorsLight.surface,
+    onSurface = GlintSemanticColorsLight.onSurface,
+    surfaceVariant = GlintSemanticColorsLight.surfaceVariant,
+    onSurfaceVariant = GlintSemanticColorsLight.onSurfaceVariant,
+    outline = GlintSemanticColorsLight.outline,
+    outlineVariant = GlintSemanticColorsLight.outlineVariant,
+    scrim = GlintSemanticColorsLight.scrim,
+    inverseSurface = GlintSemanticColorsLight.inverseSurface,
+    inverseOnSurface = GlintSemanticColorsLight.inverseOnSurface,
+    inversePrimary = GlintSemanticColorsLight.inversePrimary
 )
 
+/**
+ * Dark color scheme using Glint semantic color tokens
+ */
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFFD0BCFF),
-    onPrimary = Color(0xFF381E72),
-    primaryContainer = Color(0xFF4F378B),
-    onPrimaryContainer = Color(0xFFEADDFF),
-    secondary = Color(0xFFCCC2DC),
-    onSecondary = Color(0xFF332D41),
-    secondaryContainer = Color(0xFF4A4458),
-    onSecondaryContainer = Color(0xFFE8DEF8),
-    tertiary = Color(0xFFEFB8C8),
-    onTertiary = Color(0xFF492532),
-    tertiaryContainer = Color(0xFF633B48),
-    onTertiaryContainer = Color(0xFFFFD8E4),
-    error = Color(0xFFF2B8B5),
-    onError = Color(0xFF601410),
-    errorContainer = Color(0xFF8C1D18),
-    onErrorContainer = Color(0xFFF9DEDC),
-    background = Color(0xFF1C1B1F),
-    onBackground = Color(0xFFE6E1E5),
-    surface = Color(0xFF1C1B1F),
-    onSurface = Color(0xFFE6E1E5),
-    surfaceVariant = Color(0xFF49454F),
-    onSurfaceVariant = Color(0xFFCAC4D0),
-    outline = Color(0xFF938F99),
-    outlineVariant = Color(0xFF49454F),
-    scrim = Color(0xFF000000),
-    inverseSurface = Color(0xFFE6E1E5),
-    inverseOnSurface = Color(0xFF313033),
-    inversePrimary = Color(0xFF6750A4)
+    primary = GlintSemanticColorsDark.primary,
+    onPrimary = GlintSemanticColorsDark.onPrimary,
+    primaryContainer = GlintSemanticColorsDark.primaryContainer,
+    onPrimaryContainer = GlintSemanticColorsDark.onPrimaryContainer,
+    secondary = GlintSemanticColorsDark.secondary,
+    onSecondary = GlintSemanticColorsDark.onSecondary,
+    secondaryContainer = GlintSemanticColorsDark.secondaryContainer,
+    onSecondaryContainer = GlintSemanticColorsDark.onSecondaryContainer,
+    tertiary = GlintSemanticColorsDark.tertiary,
+    onTertiary = GlintSemanticColorsDark.onTertiary,
+    tertiaryContainer = GlintSemanticColorsDark.tertiaryContainer,
+    onTertiaryContainer = GlintSemanticColorsDark.onTertiaryContainer,
+    error = GlintSemanticColorsDark.error,
+    onError = GlintSemanticColorsDark.onError,
+    errorContainer = GlintSemanticColorsDark.errorContainer,
+    onErrorContainer = GlintSemanticColorsDark.onErrorContainer,
+    background = GlintSemanticColorsDark.background,
+    onBackground = GlintSemanticColorsDark.onBackground,
+    surface = GlintSemanticColorsDark.surface,
+    onSurface = GlintSemanticColorsDark.onSurface,
+    surfaceVariant = GlintSemanticColorsDark.surfaceVariant,
+    onSurfaceVariant = GlintSemanticColorsDark.onSurfaceVariant,
+    outline = GlintSemanticColorsDark.outline,
+    outlineVariant = GlintSemanticColorsDark.outlineVariant,
+    scrim = GlintSemanticColorsDark.scrim,
+    inverseSurface = GlintSemanticColorsDark.inverseSurface,
+    inverseOnSurface = GlintSemanticColorsDark.inverseOnSurface,
+    inversePrimary = GlintSemanticColorsDark.inversePrimary
 )
 
+/**
+ * Default Glint typography tokens
+ */
+private val DefaultTypography = GlintTypographyTokens()
+
+/**
+ * Default Glint spacing tokens
+ */
+private val DefaultSpacing = GlintSpacing()
+
+/**
+ * Default Glint shape tokens
+ */
+private val DefaultShape = GlintShape()
+
+/**
+ * CompositionLocal for Glint Typography
+ */
+private val LocalGlintTypography = staticCompositionLocalOf { DefaultTypography }
+
+/**
+ * GlintTheme provides access to the Glint Design System tokens
+ */
+object GlintTheme {
+    /**
+     * Access the current color scheme from Material Theme
+     */
+    val colorScheme: ColorScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.colorScheme
+
+    /**
+     * Access the current typography tokens
+     */
+    val typography: GlintTypographyTokens
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalGlintTypography.current
+
+    /**
+     * Access the current spacing tokens
+     */
+    val spacing: GlintSpacing
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalGlintSpacing.current
+
+    /**
+     * Access the current shape tokens
+     */
+    val shape: GlintShape
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalGlintShape.current
+}
+
+/**
+ * Main Glint theme composable
+ */
 @Composable
 fun GlintTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    typography: GlintTypographyTokens = DefaultTypography,
+    spacing: GlintSpacing = DefaultSpacing,
+    shape: GlintShape = DefaultShape,
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalGlintTypography provides typography,
+        LocalGlintSpacing provides spacing,
+        LocalGlintShape provides shape
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            content = content
+        )
+    }
 }

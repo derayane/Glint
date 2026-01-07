@@ -53,8 +53,6 @@ fun GlintToggle(
     enabled: Boolean = true,
     size: GlintToggleSize = GlintToggleSize.Medium
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    
     // Size configurations
     val (trackWidth, trackHeight, thumbSize) = when (size) {
         GlintToggleSize.Small -> Triple(40.dp, 20.dp, 16.dp)
@@ -100,7 +98,7 @@ fun GlintToggle(
             .clip(GlintTheme.shape.full)
             .background(trackColor)
             .clickable(
-                interactionSource = interactionSource,
+                interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 enabled = enabled,
                 role = Role.Switch,

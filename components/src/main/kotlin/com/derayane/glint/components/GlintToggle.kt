@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.derayane.glint.coreui.theme.GlintTheme
+import com.derayane.glint.coreui.tokens.GlintComponents
 
 /**
  * GlintToggle - A switch/toggle component for binary state selection
@@ -53,11 +54,23 @@ fun GlintToggle(
     enabled: Boolean = true,
     size: GlintToggleSize = GlintToggleSize.Medium
 ) {
-    // Size configurations
+    // Size configurations from design tokens
     val (trackWidth, trackHeight, thumbSize) = when (size) {
-        GlintToggleSize.Small -> Triple(40.dp, 20.dp, 16.dp)
-        GlintToggleSize.Medium -> Triple(52.dp, 28.dp, 24.dp)
-        GlintToggleSize.Large -> Triple(64.dp, 36.dp, 32.dp)
+        GlintToggleSize.Small -> Triple(
+            GlintComponents.Toggle.trackWidthSmall,
+            GlintComponents.Toggle.trackHeightSmall,
+            GlintComponents.Toggle.thumbSizeSmall
+        )
+        GlintToggleSize.Medium -> Triple(
+            GlintComponents.Toggle.trackWidthMedium,
+            GlintComponents.Toggle.trackHeightMedium,
+            GlintComponents.Toggle.thumbSizeMedium
+        )
+        GlintToggleSize.Large -> Triple(
+            GlintComponents.Toggle.trackWidthLarge,
+            GlintComponents.Toggle.trackHeightLarge,
+            GlintComponents.Toggle.thumbSizeLarge
+        )
     }
     
     val thumbPadding = (trackHeight - thumbSize) / 2
@@ -70,7 +83,7 @@ fun GlintToggle(
             checked -> GlintTheme.colorScheme.primary
             else -> GlintTheme.colorScheme.outline
         },
-        animationSpec = tween(durationMillis = 150),
+        animationSpec = tween(durationMillis = GlintComponents.Toggle.animationDuration),
         label = "trackColor"
     )
     
@@ -80,14 +93,14 @@ fun GlintToggle(
             checked -> GlintTheme.colorScheme.onPrimary
             else -> GlintTheme.colorScheme.surface
         },
-        animationSpec = tween(durationMillis = 150),
+        animationSpec = tween(durationMillis = GlintComponents.Toggle.animationDuration),
         label = "thumbColor"
     )
     
     // Animated thumb position
     val thumbPosition by animateDpAsState(
         targetValue = if (checked) thumbOffset else 0.dp,
-        animationSpec = tween(durationMillis = 150),
+        animationSpec = tween(durationMillis = GlintComponents.Toggle.animationDuration),
         label = "thumbPosition"
     )
     

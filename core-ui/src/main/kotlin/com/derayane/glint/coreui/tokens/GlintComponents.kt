@@ -62,6 +62,28 @@ object GlintComponents {
     }
     
     /**
+     * Toggle/Switch tokens
+     * Digunakan untuk toggle/switch components
+     */
+    object Toggle {
+        // Track dimensions (width x height)
+        val trackWidthSmall = 40.dp
+        val trackHeightSmall = 20.dp
+        val thumbSizeSmall = 16.dp
+        
+        val trackWidthMedium = 52.dp
+        val trackHeightMedium = 28.dp
+        val thumbSizeMedium = 24.dp
+        
+        val trackWidthLarge = 64.dp
+        val trackHeightLarge = 36.dp
+        val thumbSizeLarge = 32.dp
+        
+        // Animation duration
+        val animationDuration = 150  // milliseconds
+    }
+    
+    /**
      * Card tokens
      * Digunakan untuk card components
      */

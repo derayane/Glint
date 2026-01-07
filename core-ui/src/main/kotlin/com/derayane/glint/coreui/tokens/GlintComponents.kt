@@ -63,7 +63,7 @@ object GlintComponents {
     
     /**
      * Toggle/Switch tokens
-     * Digunakan untuk toggle/switch components
+     * Used for toggle/switch components
      */
     object Toggle {
         // Track dimensions (width x height)

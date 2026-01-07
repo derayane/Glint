@@ -18,3 +18,11 @@ rootProject.name = "Glint"
 include(":core-ui")
 include(":components")
 include(":catalog")
+
+// Workaround for version catalog in buildscript
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}

@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -38,15 +38,15 @@ android {
     }
     
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+        kotlinCompilerExtensionVersion = "1.5.4"
     }
 }
 
 dependencies {
     implementation(project(":core-ui"))
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
-    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.compose.ui:ui:1.5.4")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.4")
+    implementation("androidx.compose.material3:material3:1.1.2")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.4")
 }

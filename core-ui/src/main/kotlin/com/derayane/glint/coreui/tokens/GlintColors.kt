@@ -3,338 +3,288 @@ package com.derayane.glint.coreui.tokens
 import androidx.compose.ui.graphics.Color
 
 /**
- * GlintColors - Complete Figma Design Token Color Palette
- * Generated from Figma design tokens with exact naming conventions
+ * Glint Color System - Exact Figma JSON naming
  */
 
-// ==================== Text Colors ====================
+// Text Colors
 object GlintTextColors {
-    val Primary = Color(0xFF000000)
-    val Secondary = Color(0xFF6B7280)
-    val Tertiary = Color(0xFF9CA3AF)
-    val Disabled = Color(0xFFD1D5DB)
-    val Inverse = Color(0xFFFFFFFF)
-    val Link = Color(0xFF3B82F6)
-    val Success = Color(0xFF10B981)
-    val Warning = Color(0xFFF59E0B)
-    val Error = Color(0xFFEF4444)
+    val primary = Color(0xFF323234)
+    val secondary = Color(0xFF646467)
+    val tertiary = Color(0xFFB1B1B3)
+    val white = Color(0xFFFFFFFF)
+    val link = Color(0xFF00AB4E)
+    val error = Color(0xFFC34D36)
 }
 
-// ==================== Neutral Colors ====================
+// Neutral Colors
 object GlintNeutralColors {
-    val White = Color(0xFFFFFFFF)
-    val Black = Color(0xFF000000)
-    val Transparent = Color(0x00000000)
+    val white = Color(0xFFFFFFFF)
+    val background = Color(0xFFF8F8F8)
+    val componentBackground = Color(0xFFEEEEEF)
+    val foreground = Color(0xFFE0E0E1)
+    val disabledBackground = Color(0xFFCBCBCD)
+    val transparent = Color(0x14FFFFFF)
 }
 
-// ==================== Greyscale Colors ====================
-object GlintGreyscaleColors {
-    val Grey50 = Color(0xFFF9FAFB)
-    val Grey100 = Color(0xFFF3F4F6)
-    val Grey200 = Color(0xFFE5E7EB)
-    val Grey300 = Color(0xFFD1D5DB)
-    val Grey400 = Color(0xFF9CA3AF)
-    val Grey500 = Color(0xFF6B7280)
-    val Grey600 = Color(0xFF4B5563)
-    val Grey700 = Color(0xFF374151)
-    val Grey800 = Color(0xFF1F2937)
-    val Grey900 = Color(0xFF111827)
+// Greyscale - Jet Black Scale
+object GlintGreyscaleJetBlack {
+    val minus90 = Color(0xFFE6E6E6)
+    val minus80 = Color(0xFFCCCCCC)
+    val minus70 = Color(0xFFB3B3B3)
+    val minus60 = Color(0xFF999999)
+    val minus50 = Color(0xFF808080)
+    val minus40 = Color(0xFF666666)
+    val minus30 = Color(0xFF4D4D4D)
+    val minus20 = Color(0xFF333333)
+    val minus10 = Color(0xFF1A1A1A)
+    val base = Color(0xFF000000)
 }
 
-// ==================== Jet Black Scale ====================
-object GlintJetBlackColors {
-    val JetBlack50 = Color(0xFFF5F5F5)
-    val JetBlack100 = Color(0xFFE8E8E8)
-    val JetBlack200 = Color(0xFFD1D1D1)
-    val JetBlack300 = Color(0xFFB0B0B0)
-    val JetBlack400 = Color(0xFF888888)
-    val JetBlack500 = Color(0xFF6D6D6D)
-    val JetBlack600 = Color(0xFF5D5D5D)
-    val JetBlack700 = Color(0xFF4F4F4F)
-    val JetBlack800 = Color(0xFF454545)
-    val JetBlack900 = Color(0xFF3A3A3A)
-    val JetBlack950 = Color(0xFF262626)
+// Primary - Passion Green
+object GlintPrimaryPassionGreen {
+    val minus70 = Color(0xFFB3F4D3)
+    val minus60 = Color(0xFF99F0C5)
+    val minus50 = Color(0xFF80ECB8)
+    val minus40 = Color(0xFF66E8AA)
+    val minus30 = Color(0xFF4DE49C)
+    val minus20 = Color(0xFF33E08E)
+    val minus10 = Color(0xFF1ADC81)
+    val base = Color(0xFF00D873)
+    val plus10 = Color(0xFF00C268)
+    val plus20 = Color(0xFF00AC5C)
+    val plus30 = Color(0xFF009651)
+    val plus40 = Color(0xFF008046)
+    val plus50 = Color(0xFF006A3A)
+    val plus60 = Color(0xFF00542F)
+    val plus70 = Color(0xFF003E23)
 }
 
-// ==================== Primary Colors ====================
-object GlintPrimaryColors {
-    // Passion Green Scale
-    object PassionGreen {
-        val PassionGreen50 = Color(0xFFF0FDF4)
-        val PassionGreen100 = Color(0xFFDCFCE7)
-        val PassionGreen200 = Color(0xFFBBF7D0)
-        val PassionGreen300 = Color(0xFF86EFAC)
-        val PassionGreen400 = Color(0xFF4ADE80)
-        val PassionGreen500 = Color(0xFF22C55E)
-        val PassionGreen600 = Color(0xFF16A34A)
-        val PassionGreen700 = Color(0xFF15803D)
-        val PassionGreen800 = Color(0xFF166534)
-        val PassionGreen900 = Color(0xFF14532D)
-        val PassionGreen950 = Color(0xFF052E16)
-    }
-
-    // Irish Green Scale
-    object IrishGreen {
-        val IrishGreen50 = Color(0xFFF0FDF5)
-        val IrishGreen100 = Color(0xFFDCFCE8)
-        val IrishGreen200 = Color(0xFFBBF7D1)
-        val IrishGreen300 = Color(0xFF86EFAD)
-        val IrishGreen400 = Color(0xFF4ADE81)
-        val IrishGreen500 = Color(0xFF22C55F)
-        val IrishGreen600 = Color(0xFF16A34B)
-        val IrishGreen700 = Color(0xFF15803E)
-        val IrishGreen800 = Color(0xFF166535)
-        val IrishGreen900 = Color(0xFF14532E)
-        val IrishGreen950 = Color(0xFF052F16)
-    }
-
-    // Emerald Green Scale
-    object EmeraldGreen {
-        val EmeraldGreen50 = Color(0xFFECFDF5)
-        val EmeraldGreen100 = Color(0xFFD1FAE5)
-        val EmeraldGreen200 = Color(0xFFA7F3D0)
-        val EmeraldGreen300 = Color(0xFF6EE7B7)
-        val EmeraldGreen400 = Color(0xFF34D399)
-        val EmeraldGreen500 = Color(0xFF10B981)
-        val EmeraldGreen600 = Color(0xFF059669)
-        val EmeraldGreen700 = Color(0xFF047857)
-        val EmeraldGreen800 = Color(0xFF065F46)
-        val EmeraldGreen900 = Color(0xFF064E3B)
-        val EmeraldGreen950 = Color(0xFF022C22)
-    }
+// Primary - Irish Green
+object GlintPrimaryIrishGreen {
+    val minus70 = Color(0xFFB3F1D0)
+    val minus60 = Color(0xFF99EEC3)
+    val minus50 = Color(0xFF80EAB5)
+    val minus40 = Color(0xFF66E6A7)
+    val minus30 = Color(0xFF4DE39A)
+    val minus20 = Color(0xFF33DF8C)
+    val minus10 = Color(0xFF1ADB7E)
+    val base = Color(0xFF00D771)
+    val plus10 = Color(0xFF00C265)
+    val plus20 = Color(0xFF00AD5A)
+    val plus30 = Color(0xFF00984E)
+    val plus40 = Color(0xFF008343)
+    val plus50 = Color(0xFF006E37)
+    val plus60 = Color(0xFF00592C)
+    val plus70 = Color(0xFF004420)
 }
 
-// ==================== Secondary Colors ====================
-object GlintSecondaryColors {
-    // Crimson Red Scale
-    object CrimsonRed {
-        val CrimsonRed50 = Color(0xFFFEF2F2)
-        val CrimsonRed100 = Color(0xFFFEE2E2)
-        val CrimsonRed200 = Color(0xFFFECACA)
-        val CrimsonRed300 = Color(0xFFFCA5A5)
-        val CrimsonRed400 = Color(0xFFF87171)
-        val CrimsonRed500 = Color(0xFFEF4444)
-        val CrimsonRed600 = Color(0xFFDC2626)
-        val CrimsonRed700 = Color(0xFFB91C1C)
-        val CrimsonRed800 = Color(0xFF991B1B)
-        val CrimsonRed900 = Color(0xFF7F1D1D)
-        val CrimsonRed950 = Color(0xFF450A0A)
-    }
-
-    // Pumpkin Orange Scale
-    object PumpkinOrange {
-        val PumpkinOrange50 = Color(0xFFFFF7ED)
-        val PumpkinOrange100 = Color(0xFFFFEDD5)
-        val PumpkinOrange200 = Color(0xFFFED7AA)
-        val PumpkinOrange300 = Color(0xFFFDBA74)
-        val PumpkinOrange400 = Color(0xFFFB923C)
-        val PumpkinOrange500 = Color(0xFFF97316)
-        val PumpkinOrange600 = Color(0xFFEA580C)
-        val PumpkinOrange700 = Color(0xFFC2410C)
-        val PumpkinOrange800 = Color(0xFF9A3412)
-        val PumpkinOrange900 = Color(0xFF7C2D12)
-        val PumpkinOrange950 = Color(0xFF431407)
-    }
-
-    // Butter Yellow Scale
-    object ButterYellow {
-        val ButterYellow50 = Color(0xFFFEFCE8)
-        val ButterYellow100 = Color(0xFFFEF9C3)
-        val ButterYellow200 = Color(0xFFFEF08A)
-        val ButterYellow300 = Color(0xFFFDE047)
-        val ButterYellow400 = Color(0xFFFACC15)
-        val ButterYellow500 = Color(0xFFEAB308)
-        val ButterYellow600 = Color(0xFFCA8A04)
-        val ButterYellow700 = Color(0xFFA16207)
-        val ButterYellow800 = Color(0xFF854D0E)
-        val ButterYellow900 = Color(0xFF713F12)
-        val ButterYellow950 = Color(0xFF422006)
-    }
-
-    // Hazel Gold Scale
-    object HazelGold {
-        val HazelGold50 = Color(0xFFFFFBEB)
-        val HazelGold100 = Color(0xFFFEF3C7)
-        val HazelGold200 = Color(0xFFFDE68A)
-        val HazelGold300 = Color(0xFFFCD34D)
-        val HazelGold400 = Color(0xFFFBBF24)
-        val HazelGold500 = Color(0xFFF59E0B)
-        val HazelGold600 = Color(0xFFD97706)
-        val HazelGold700 = Color(0xFFB45309)
-        val HazelGold800 = Color(0xFF92400E)
-        val HazelGold900 = Color(0xFF78350F)
-        val HazelGold950 = Color(0xFF451A03)
-    }
-
-    // Teal Green Scale
-    object TealGreen {
-        val TealGreen50 = Color(0xFFF0FDFA)
-        val TealGreen100 = Color(0xFFCCFBF1)
-        val TealGreen200 = Color(0xFF99F6E4)
-        val TealGreen300 = Color(0xFF5EEAD4)
-        val TealGreen400 = Color(0xFF2DD4BF)
-        val TealGreen500 = Color(0xFF14B8A6)
-        val TealGreen600 = Color(0xFF0D9488)
-        val TealGreen700 = Color(0xFF0F766E)
-        val TealGreen800 = Color(0xFF115E59)
-        val TealGreen900 = Color(0xFF134E4A)
-        val TealGreen950 = Color(0xFF042F2E)
-    }
-
-    // Ocean Blue Scale
-    object OceanBlue {
-        val OceanBlue50 = Color(0xFFEFF6FF)
-        val OceanBlue100 = Color(0xFFDBEAFE)
-        val OceanBlue200 = Color(0xFFBFDBFE)
-        val OceanBlue300 = Color(0xFF93C5FD)
-        val OceanBlue400 = Color(0xFF60A5FA)
-        val OceanBlue500 = Color(0xFF3B82F6)
-        val OceanBlue600 = Color(0xFF2563EB)
-        val OceanBlue700 = Color(0xFF1D4ED8)
-        val OceanBlue800 = Color(0xFF1E40AF)
-        val OceanBlue900 = Color(0xFF1E3A8A)
-        val OceanBlue950 = Color(0xFF172554)
-    }
+// Primary - Emerald Green
+object GlintPrimaryEmeraldGreen {
+    val minus70 = Color(0xFFB3E8D0)
+    val minus60 = Color(0xFF99E1C3)
+    val minus50 = Color(0xFF80DAB5)
+    val minus40 = Color(0xFF66D3A7)
+    val minus30 = Color(0xFF4DCC9A)
+    val minus20 = Color(0xFF33C58C)
+    val minus10 = Color(0xFF1ABE7E)
+    val base = Color(0xFF00B771)
+    val plus10 = Color(0xFF00A565)
+    val plus20 = Color(0xFF00935A)
+    val plus30 = Color(0xFF00814E)
+    val plus40 = Color(0xFF006F43)
+    val plus50 = Color(0xFF005D37)
+    val plus60 = Color(0xFF004B2C)
+    val plus70 = Color(0xFF003920)
 }
 
-// ==================== Light Color Scheme ====================
-object GlintLightColorScheme {
-    // Surface Colors
-    val Background = GlintNeutralColors.White
-    val Surface = GlintNeutralColors.White
-    val SurfaceVariant = GlintGreyscaleColors.Grey50
-    val SurfaceContainer = GlintGreyscaleColors.Grey100
-    val SurfaceContainerLow = GlintGreyscaleColors.Grey50
-    val SurfaceContainerHigh = GlintGreyscaleColors.Grey200
-    val SurfaceContainerHighest = GlintGreyscaleColors.Grey300
-
-    // Primary Colors
-    val Primary = GlintPrimaryColors.PassionGreen.PassionGreen600
-    val OnPrimary = GlintNeutralColors.White
-    val PrimaryContainer = GlintPrimaryColors.PassionGreen.PassionGreen100
-    val OnPrimaryContainer = GlintPrimaryColors.PassionGreen.PassionGreen900
-
-    // Secondary Colors
-    val Secondary = GlintPrimaryColors.EmeraldGreen.EmeraldGreen600
-    val OnSecondary = GlintNeutralColors.White
-    val SecondaryContainer = GlintPrimaryColors.EmeraldGreen.EmeraldGreen100
-    val OnSecondaryContainer = GlintPrimaryColors.EmeraldGreen.EmeraldGreen900
-
-    // Tertiary Colors
-    val Tertiary = GlintSecondaryColors.OceanBlue.OceanBlue600
-    val OnTertiary = GlintNeutralColors.White
-    val TertiaryContainer = GlintSecondaryColors.OceanBlue.OceanBlue100
-    val OnTertiaryContainer = GlintSecondaryColors.OceanBlue.OceanBlue900
-
-    // Error Colors
-    val Error = GlintSecondaryColors.CrimsonRed.CrimsonRed600
-    val OnError = GlintNeutralColors.White
-    val ErrorContainer = GlintSecondaryColors.CrimsonRed.CrimsonRed100
-    val OnErrorContainer = GlintSecondaryColors.CrimsonRed.CrimsonRed900
-
-    // Warning Colors
-    val Warning = GlintSecondaryColors.PumpkinOrange.PumpkinOrange600
-    val OnWarning = GlintNeutralColors.White
-    val WarningContainer = GlintSecondaryColors.PumpkinOrange.PumpkinOrange100
-    val OnWarningContainer = GlintSecondaryColors.PumpkinOrange.PumpkinOrange900
-
-    // Success Colors
-    val Success = GlintPrimaryColors.IrishGreen.IrishGreen600
-    val OnSuccess = GlintNeutralColors.White
-    val SuccessContainer = GlintPrimaryColors.IrishGreen.IrishGreen100
-    val OnSuccessContainer = GlintPrimaryColors.IrishGreen.IrishGreen900
-
-    // Info Colors
-    val Info = GlintSecondaryColors.TealGreen.TealGreen600
-    val OnInfo = GlintNeutralColors.White
-    val InfoContainer = GlintSecondaryColors.TealGreen.TealGreen100
-    val OnInfoContainer = GlintSecondaryColors.TealGreen.TealGreen900
-
-    // Content Colors
-    val OnBackground = GlintJetBlackColors.JetBlack900
-    val OnSurface = GlintJetBlackColors.JetBlack900
-    val OnSurfaceVariant = GlintGreyscaleColors.Grey700
-
-    // Outline Colors
-    val Outline = GlintGreyscaleColors.Grey300
-    val OutlineVariant = GlintGreyscaleColors.Grey200
-
-    // Inverse Colors
-    val InverseSurface = GlintJetBlackColors.JetBlack800
-    val InverseOnSurface = GlintGreyscaleColors.Grey50
-    val InversePrimary = GlintPrimaryColors.PassionGreen.PassionGreen300
-
-    // Scrim
-    val Scrim = GlintNeutralColors.Black.copy(alpha = 0.32f)
+// Secondary - Crimson Red
+object GlintSecondaryCrimsonRed {
+    val minus70 = Color(0xFFF4BFBB)
+    val minus60 = Color(0xFFF0ACA7)
+    val minus50 = Color(0xFFEC9993)
+    val minus40 = Color(0xFFE8867F)
+    val minus30 = Color(0xFFE4736B)
+    val minus20 = Color(0xFFE06057)
+    val minus10 = Color(0xFFDC4D43)
+    val base = Color(0xFFD83A2F)
+    val plus10 = Color(0xFFC2342A)
+    val plus20 = Color(0xFFAC2E26)
+    val plus30 = Color(0xFF962821)
+    val plus40 = Color(0xFF80221C)
+    val plus50 = Color(0xFF6A1C18)
+    val plus60 = Color(0xFF541613)
+    val plus70 = Color(0xFF3E100E)
 }
 
-// ==================== Dark Color Scheme ====================
-object GlintDarkColorScheme {
-    // Surface Colors
-    val Background = GlintJetBlackColors.JetBlack950
-    val Surface = GlintJetBlackColors.JetBlack950
-    val SurfaceVariant = GlintJetBlackColors.JetBlack900
-    val SurfaceContainer = GlintJetBlackColors.JetBlack900
-    val SurfaceContainerLow = GlintJetBlackColors.JetBlack950
-    val SurfaceContainerHigh = GlintJetBlackColors.JetBlack800
-    val SurfaceContainerHighest = GlintJetBlackColors.JetBlack700
+// Secondary - Pumpkin Orange
+object GlintSecondaryPumpkinOrange {
+    val minus70 = Color(0xFFFFDDB3)
+    val minus60 = Color(0xFFFFD499)
+    val minus50 = Color(0xFFFFCB80)
+    val minus40 = Color(0xFFFFC266)
+    val minus30 = Color(0xFFFFB94D)
+    val minus20 = Color(0xFFFFB033)
+    val minus10 = Color(0xFFFFA71A)
+    val base = Color(0xFFFF9E00)
+    val plus10 = Color(0xFFE68E00)
+    val plus20 = Color(0xFFCC7E00)
+    val plus30 = Color(0xFFB36E00)
+    val plus40 = Color(0xFF995E00)
+    val plus50 = Color(0xFF804E00)
+    val plus60 = Color(0xFF663E00)
+    val plus70 = Color(0xFF4D2E00)
+}
 
-    // Primary Colors
-    val Primary = GlintPrimaryColors.PassionGreen.PassionGreen400
-    val OnPrimary = GlintPrimaryColors.PassionGreen.PassionGreen900
-    val PrimaryContainer = GlintPrimaryColors.PassionGreen.PassionGreen800
-    val OnPrimaryContainer = GlintPrimaryColors.PassionGreen.PassionGreen100
+// Secondary - Butter Yellow
+object GlintSecondaryButterYellow {
+    val minus70 = Color(0xFFFFF9B3)
+    val minus60 = Color(0xFFFFF799)
+    val minus50 = Color(0xFFFFF580)
+    val minus40 = Color(0xFFFFF366)
+    val minus30 = Color(0xFFFFF14D)
+    val minus20 = Color(0xFFFFEF33)
+    val minus10 = Color(0xFFFFED1A)
+    val base = Color(0xFFFFEB00)
+    val plus10 = Color(0xFFE6D400)
+    val plus20 = Color(0xFFCCBC00)
+    val plus30 = Color(0xFFB3A500)
+    val plus40 = Color(0xFF998D00)
+    val plus50 = Color(0xFF807600)
+    val plus60 = Color(0xFF665E00)
+    val plus70 = Color(0xFF4D4700)
+}
 
-    // Secondary Colors
-    val Secondary = GlintPrimaryColors.EmeraldGreen.EmeraldGreen400
-    val OnSecondary = GlintPrimaryColors.EmeraldGreen.EmeraldGreen900
-    val SecondaryContainer = GlintPrimaryColors.EmeraldGreen.EmeraldGreen800
-    val OnSecondaryContainer = GlintPrimaryColors.EmeraldGreen.EmeraldGreen100
+// Secondary - Hazel Gold
+object GlintSecondaryHazelGold {
+    val minus70 = Color(0xFFFFE8B3)
+    val minus60 = Color(0xFFFFE099)
+    val minus50 = Color(0xFFFFD880)
+    val minus40 = Color(0xFFFFD066)
+    val minus30 = Color(0xFFFFC84D)
+    val minus20 = Color(0xFFFFC033)
+    val minus10 = Color(0xFFFFB81A)
+    val base = Color(0xFFFFB000)
+    val plus10 = Color(0xFFE69E00)
+    val plus20 = Color(0xFFCC8D00)
+    val plus30 = Color(0xFFB37B00)
+    val plus40 = Color(0xFF996A00)
+    val plus50 = Color(0xFF805800)
+    val plus60 = Color(0xFF664600)
+    val plus70 = Color(0xFF4D3500)
+}
 
-    // Tertiary Colors
-    val Tertiary = GlintSecondaryColors.OceanBlue.OceanBlue400
-    val OnTertiary = GlintSecondaryColors.OceanBlue.OceanBlue900
-    val TertiaryContainer = GlintSecondaryColors.OceanBlue.OceanBlue800
-    val OnTertiaryContainer = GlintSecondaryColors.OceanBlue.OceanBlue100
+// Secondary - Teal Green
+object GlintSecondaryTealGreen {
+    val minus70 = Color(0xFFB3F0E8)
+    val minus60 = Color(0xFF99ECE1)
+    val minus50 = Color(0xFF80E8DA)
+    val minus40 = Color(0xFF66E4D3)
+    val minus30 = Color(0xFF4DE0CC)
+    val minus20 = Color(0xFF33DCC5)
+    val minus10 = Color(0xFF1AD8BE)
+    val base = Color(0xFF00D4B7)
+    val plus10 = Color(0xFF00BFA5)
+    val plus20 = Color(0xFF00AA92)
+    val plus30 = Color(0xFF009580)
+    val plus40 = Color(0xFF00806D)
+    val plus50 = Color(0xFF006B5B)
+    val plus60 = Color(0xFF005648)
+    val plus70 = Color(0xFF004136)
+}
 
-    // Error Colors
-    val Error = GlintSecondaryColors.CrimsonRed.CrimsonRed400
-    val OnError = GlintSecondaryColors.CrimsonRed.CrimsonRed900
-    val ErrorContainer = GlintSecondaryColors.CrimsonRed.CrimsonRed800
-    val OnErrorContainer = GlintSecondaryColors.CrimsonRed.CrimsonRed100
+// Secondary - Ocean Blue
+object GlintSecondaryOceanBlue {
+    val minus70 = Color(0xFFB8D9F4)
+    val minus60 = Color(0xFFA3CDF0)
+    val minus50 = Color(0xFF8EC1EC)
+    val minus40 = Color(0xFF79B5E8)
+    val minus30 = Color(0xFF64A9E4)
+    val minus20 = Color(0xFF4F9DE0)
+    val minus10 = Color(0xFF3A91DC)
+    val base = Color(0xFF2585D8)
+    val plus10 = Color(0xFF2178C2)
+    val plus20 = Color(0xFF1E6AAC)
+    val plus30 = Color(0xFF1A5D96)
+    val plus40 = Color(0xFF164F80)
+    val plus50 = Color(0xFF13426A)
+    val plus60 = Color(0xFF0F3454)
+    val plus70 = Color(0xFF0B273E)
+}
 
-    // Warning Colors
-    val Warning = GlintSecondaryColors.PumpkinOrange.PumpkinOrange400
-    val OnWarning = GlintSecondaryColors.PumpkinOrange.PumpkinOrange900
-    val WarningContainer = GlintSecondaryColors.PumpkinOrange.PumpkinOrange800
-    val OnWarningContainer = GlintSecondaryColors.PumpkinOrange.PumpkinOrange100
+// Semantic Colors - Light Scheme
+object GlintSemanticColorsLight {
+    val primary = GlintPrimaryPassionGreen.base
+    val onPrimary = GlintTextColors.white
+    val primaryContainer = GlintPrimaryPassionGreen.minus60
+    val onPrimaryContainer = GlintPrimaryPassionGreen.plus60
+    
+    val secondary = GlintPrimaryIrishGreen.base
+    val onSecondary = GlintTextColors.white
+    val secondaryContainer = GlintPrimaryIrishGreen.minus60
+    val onSecondaryContainer = GlintPrimaryIrishGreen.plus60
+    
+    val tertiary = GlintPrimaryEmeraldGreen.base
+    val onTertiary = GlintTextColors.white
+    val tertiaryContainer = GlintPrimaryEmeraldGreen.minus60
+    val onTertiaryContainer = GlintPrimaryEmeraldGreen.plus60
+    
+    val error = GlintTextColors.error
+    val onError = GlintTextColors.white
+    val errorContainer = GlintSecondaryCrimsonRed.minus60
+    val onErrorContainer = GlintSecondaryCrimsonRed.plus60
+    
+    val background = GlintNeutralColors.background
+    val onBackground = GlintTextColors.primary
+    
+    val surface = GlintNeutralColors.white
+    val onSurface = GlintTextColors.primary
+    val surfaceVariant = GlintNeutralColors.componentBackground
+    val onSurfaceVariant = GlintTextColors.secondary
+    
+    val outline = GlintNeutralColors.foreground
+    val outlineVariant = GlintNeutralColors.disabledBackground
+    
+    val scrim = GlintGreyscaleJetBlack.base
+    val inverseSurface = GlintGreyscaleJetBlack.minus10
+    val inverseOnSurface = GlintTextColors.white
+    val inversePrimary = GlintPrimaryPassionGreen.minus40
+}
 
-    // Success Colors
-    val Success = GlintPrimaryColors.IrishGreen.IrishGreen400
-    val OnSuccess = GlintPrimaryColors.IrishGreen.IrishGreen900
-    val SuccessContainer = GlintPrimaryColors.IrishGreen.IrishGreen800
-    val OnSuccessContainer = GlintPrimaryColors.IrishGreen.IrishGreen100
-
-    // Info Colors
-    val Info = GlintSecondaryColors.TealGreen.TealGreen400
-    val OnInfo = GlintSecondaryColors.TealGreen.TealGreen900
-    val InfoContainer = GlintSecondaryColors.TealGreen.TealGreen800
-    val OnInfoContainer = GlintSecondaryColors.TealGreen.TealGreen100
-
-    // Content Colors
-    val OnBackground = GlintGreyscaleColors.Grey100
-    val OnSurface = GlintGreyscaleColors.Grey100
-    val OnSurfaceVariant = GlintGreyscaleColors.Grey400
-
-    // Outline Colors
-    val Outline = GlintJetBlackColors.JetBlack600
-    val OutlineVariant = GlintJetBlackColors.JetBlack700
-
-    // Inverse Colors
-    val InverseSurface = GlintGreyscaleColors.Grey100
-    val InverseOnSurface = GlintJetBlackColors.JetBlack900
-    val InversePrimary = GlintPrimaryColors.PassionGreen.PassionGreen600
-
-    // Scrim
-    val Scrim = GlintNeutralColors.Black.copy(alpha = 0.64f)
+// Semantic Colors - Dark Scheme
+object GlintSemanticColorsDark {
+    val primary = GlintPrimaryPassionGreen.minus30
+    val onPrimary = GlintPrimaryPassionGreen.plus60
+    val primaryContainer = GlintPrimaryPassionGreen.plus50
+    val onPrimaryContainer = GlintPrimaryPassionGreen.minus60
+    
+    val secondary = GlintPrimaryIrishGreen.minus30
+    val onSecondary = GlintPrimaryIrishGreen.plus60
+    val secondaryContainer = GlintPrimaryIrishGreen.plus50
+    val onSecondaryContainer = GlintPrimaryIrishGreen.minus60
+    
+    val tertiary = GlintPrimaryEmeraldGreen.minus30
+    val onTertiary = GlintPrimaryEmeraldGreen.plus60
+    val tertiaryContainer = GlintPrimaryEmeraldGreen.plus50
+    val onTertiaryContainer = GlintPrimaryEmeraldGreen.minus60
+    
+    val error = GlintSecondaryCrimsonRed.minus30
+    val onError = GlintSecondaryCrimsonRed.plus60
+    val errorContainer = GlintSecondaryCrimsonRed.plus50
+    val onErrorContainer = GlintSecondaryCrimsonRed.minus60
+    
+    val background = GlintGreyscaleJetBlack.minus10
+    val onBackground = GlintGreyscaleJetBlack.minus80
+    
+    val surface = GlintGreyscaleJetBlack.minus10
+    val onSurface = GlintGreyscaleJetBlack.minus80
+    val surfaceVariant = GlintGreyscaleJetBlack.minus20
+    val onSurfaceVariant = GlintGreyscaleJetBlack.minus70
+    
+    val outline = GlintGreyscaleJetBlack.minus40
+    val outlineVariant = GlintGreyscaleJetBlack.minus30
+    
+    val scrim = GlintGreyscaleJetBlack.base
+    val inverseSurface = GlintGreyscaleJetBlack.minus80
+    val inverseOnSurface = GlintGreyscaleJetBlack.minus10
+    val inversePrimary = GlintPrimaryPassionGreen.base
 }

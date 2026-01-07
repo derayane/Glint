@@ -2,9 +2,7 @@ package com.derayane.glint.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -13,11 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.derayane.glint.coreui.theme.GlintTheme
+import com.derayane.glint.coreui.tokens.GlintComponents
 import com.derayane.glint.coreui.tokens.GlintSpacing
 
 /**
@@ -28,10 +24,16 @@ import com.derayane.glint.coreui.tokens.GlintSpacing
  * 2. Secondary - Untuk aksi sekunder (outlined button)
  * 3. Ghost - Untuk aksi tersier (text button)
  * 
+ * Design Decisions:
+ * - Semua dimensi menggunakan design tokens (GlintComponents.Button)
+ * - Colors menggunakan MaterialTheme.colorScheme (auto light/dark mode)
+ * - Shape menggunakan MaterialTheme.shapes
+ * - Typography responsive berdasarkan size
+ * 
  * Alasan pemilihan:
  * - Primary button menonjol untuk call-to-action utama
  * - Secondary button memberikan alternatif tanpa terlalu dominan
- * - Ghost button untuk aksi yang less important atau destructive
+ * - Ghost button untuk aksi yang less important
  * - Konsisten dengan Material Design 3 button patterns
  */
 
@@ -46,17 +48,17 @@ enum class GlintButtonSize {
 
 /**
  * Internal function untuk mendapatkan height berdasarkan size
+ * Menggunakan GlintComponents.Button tokens
  */
-private fun getButtonHeight(size: GlintButtonSize): Int {
-    return when (size) {
-        GlintButtonSize.SMALL -> 36
-        GlintButtonSize.MEDIUM -> 48
-        GlintButtonSize.LARGE -> 56
-    }
+private fun getButtonHeight(size: GlintButtonSize) = when (size) {
+    GlintButtonSize.SMALL -> GlintComponents.Button.heightSmall
+    GlintButtonSize.MEDIUM -> GlintComponents.Button.heightMedium
+    GlintButtonSize.LARGE -> GlintComponents.Button.heightLarge
 }
 
 /**
  * Internal function untuk mendapatkan padding berdasarkan size
+ * Menggunakan GlintSpacing tokens
  */
 private fun getButtonPadding(size: GlintButtonSize): PaddingValues {
     return when (size) {
@@ -94,7 +96,7 @@ fun GlintButtonPrimary(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.height(getButtonHeight(size).dp),
+        modifier = modifier.height(getButtonHeight(size)),
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
@@ -107,37 +109,13 @@ fun GlintButtonPrimary(
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.labelLarge,
-            textAlign = TextAlign.Center
+            style = when (size) {
+                GlintButtonSize.SMALL -> MaterialTheme.typography.labelSmall
+                GlintButtonSize.MEDIUM -> MaterialTheme.typography.labelLarge
+                GlintButtonSize.LARGE -> MaterialTheme.typography.titleMedium
+            }
         )
     }
-}
-
-/**
- * GlintButton Primary dengan custom content (untuk icon + text)
- */
-@Composable
-fun GlintButtonPrimary(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    size: GlintButtonSize = GlintButtonSize.MEDIUM,
-    content: @Composable RowScope.() -> Unit
-) {
-    Button(
-        onClick = onClick,
-        modifier = modifier.height(getButtonHeight(size).dp),
-        enabled = enabled,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-        ),
-        contentPadding = getButtonPadding(size),
-        shape = MaterialTheme.shapes.small,
-        content = content
-    )
 }
 
 /**
@@ -159,58 +137,31 @@ fun GlintButtonSecondary(
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier.height(getButtonHeight(size).dp),
+        modifier = modifier.height(getButtonHeight(size)),
         enabled = enabled,
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = Color.Transparent,
+            containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.primary,
-            disabledContainerColor = Color.Transparent,
+            disabledContainerColor = MaterialTheme.colorScheme.surface,
             disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         border = BorderStroke(
-            width = 1.dp,
-            color = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+            width = GlintComponents.Button.borderWidth,
+            color = if (enabled) MaterialTheme.colorScheme.outline 
+                   else MaterialTheme.colorScheme.onSurfaceVariant
         ),
         contentPadding = getButtonPadding(size),
         shape = MaterialTheme.shapes.small
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.labelLarge,
-            textAlign = TextAlign.Center
+            style = when (size) {
+                GlintButtonSize.SMALL -> MaterialTheme.typography.labelSmall
+                GlintButtonSize.MEDIUM -> MaterialTheme.typography.labelLarge
+                GlintButtonSize.LARGE -> MaterialTheme.typography.titleMedium
+            }
         )
     }
-}
-
-/**
- * GlintButton Secondary dengan custom content (untuk icon + text)
- */
-@Composable
-fun GlintButtonSecondary(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    size: GlintButtonSize = GlintButtonSize.MEDIUM,
-    content: @Composable RowScope.() -> Unit
-) {
-    OutlinedButton(
-        onClick = onClick,
-        modifier = modifier.height(getButtonHeight(size).dp),
-        enabled = enabled,
-        colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.primary,
-            disabledContainerColor = Color.Transparent,
-            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-        ),
-        border = BorderStroke(
-            width = 1.dp,
-            color = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-        ),
-        contentPadding = getButtonPadding(size),
-        shape = MaterialTheme.shapes.small,
-        content = content
-    )
 }
 
 /**
@@ -232,12 +183,12 @@ fun GlintButtonGhost(
 ) {
     TextButton(
         onClick = onClick,
-        modifier = modifier.height(getButtonHeight(size).dp),
+        modifier = modifier.height(getButtonHeight(size)),
         enabled = enabled,
         colors = ButtonDefaults.textButtonColors(
-            containerColor = Color.Transparent,
+            containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.primary,
-            disabledContainerColor = Color.Transparent,
+            disabledContainerColor = MaterialTheme.colorScheme.surface,
             disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         contentPadding = getButtonPadding(size),
@@ -245,124 +196,43 @@ fun GlintButtonGhost(
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.labelLarge,
-            textAlign = TextAlign.Center
+            style = when (size) {
+                GlintButtonSize.SMALL -> MaterialTheme.typography.labelSmall
+                GlintButtonSize.MEDIUM -> MaterialTheme.typography.labelLarge
+                GlintButtonSize.LARGE -> MaterialTheme.typography.titleMedium
+            }
         )
     }
 }
 
 /**
- * GlintButton Ghost dengan custom content (untuk icon + text)
+ * Preview untuk semua variasi button
  */
+@Preview(name = "Light Mode", showBackground = true)
 @Composable
-fun GlintButtonGhost(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    size: GlintButtonSize = GlintButtonSize.MEDIUM,
-    content: @Composable RowScope.() -> Unit
-) {
-    TextButton(
-        onClick = onClick,
-        modifier = modifier.height(getButtonHeight(size).dp),
-        enabled = enabled,
-        colors = ButtonDefaults.textButtonColors(
-            containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.primary,
-            disabledContainerColor = Color.Transparent,
-            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-        ),
-        contentPadding = getButtonPadding(size),
-        shape = MaterialTheme.shapes.small,
-        content = content
-    )
-}
-
-// ============================================
-// PREVIEWS
-// ============================================
-
-@Preview(name = "Primary Button - Light", showBackground = true)
-@Composable
-private fun PreviewGlintButtonPrimary() {
-    GlintTheme {
-        GlintButtonPrimary(
-            text = "Primary Button",
-            onClick = {},
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Preview(name = "Secondary Button - Light", showBackground = true)
-@Composable
-private fun PreviewGlintButtonSecondary() {
-    GlintTheme {
-        GlintButtonSecondary(
-            text = "Secondary Button",
-            onClick = {},
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Preview(name = "Ghost Button - Light", showBackground = true)
-@Composable
-private fun PreviewGlintButtonGhost() {
-    GlintTheme {
-        GlintButtonGhost(
-            text = "Ghost Button",
-            onClick = {},
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-}
-
-@Preview(name = "Button Sizes", showBackground = true)
-@Composable
-private fun PreviewGlintButtonSizes() {
+private fun GlintButtonPreview() {
     GlintTheme {
         androidx.compose.foundation.layout.Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)
+            modifier = Modifier.padding(GlintSpacing.lg),
+            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(GlintSpacing.md)
         ) {
-            GlintButtonPrimary(
-                text = "Small",
-                onClick = {},
-                size = GlintButtonSize.SMALL
-            )
-            GlintButtonPrimary(
-                text = "Medium",
-                onClick = {},
-                size = GlintButtonSize.MEDIUM
-            )
-            GlintButtonPrimary(
-                text = "Large",
-                onClick = {},
-                size = GlintButtonSize.LARGE
-            )
-        }
-    }
-}
-
-@Preview(name = "Button States", showBackground = true)
-@Composable
-private fun PreviewGlintButtonStates() {
-    GlintTheme {
-        androidx.compose.foundation.layout.Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)
-        ) {
-            GlintButtonPrimary(
-                text = "Enabled",
-                onClick = {},
-                enabled = true
-            )
-            GlintButtonPrimary(
-                text = "Disabled",
-                onClick = {},
-                enabled = false
-            )
+            Text("Small Buttons", style = MaterialTheme.typography.titleSmall)
+            GlintButtonPrimary(text = "Primary", onClick = {}, size = GlintButtonSize.SMALL)
+            GlintButtonSecondary(text = "Secondary", onClick = {}, size = GlintButtonSize.SMALL)
+            GlintButtonGhost(text = "Ghost", onClick = {}, size = GlintButtonSize.SMALL)
+            
+            Text("Medium Buttons", style = MaterialTheme.typography.titleSmall)
+            GlintButtonPrimary(text = "Primary", onClick = {})
+            GlintButtonSecondary(text = "Secondary", onClick = {})
+            GlintButtonGhost(text = "Ghost", onClick = {})
+            
+            Text("Large Buttons", style = MaterialTheme.typography.titleSmall)
+            GlintButtonPrimary(text = "Primary", onClick = {}, size = GlintButtonSize.LARGE)
+            GlintButtonSecondary(text = "Secondary", onClick = {}, size = GlintButtonSize.LARGE)
+            GlintButtonGhost(text = "Ghost", onClick = {}, size = GlintButtonSize.LARGE)
+            
+            Text("Disabled State", style = MaterialTheme.typography.titleSmall)
+            GlintButtonPrimary(text = "Disabled", onClick = {}, enabled = false)
         }
     }
 }

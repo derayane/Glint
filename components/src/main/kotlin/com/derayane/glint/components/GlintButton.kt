@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.derayane.glint.coreui.theme.GlintTheme
+import com.derayane.glint.coreui.tokens.GlintComponents
 
 /**
  * Glint Button using theme tokens only
@@ -44,16 +45,16 @@ fun GlintButton(
 ) {
     val contentPadding = when (size) {
         GlintButtonSize.Small -> PaddingValues(
-            horizontal = GlintTheme.spacing.medium,
-            vertical = GlintTheme.spacing.small
+            horizontal = GlintTheme.spacing.md,
+            vertical = GlintTheme.spacing.sm
         )
         GlintButtonSize.Medium -> PaddingValues(
-            horizontal = GlintTheme.spacing.large,
-            vertical = GlintTheme.spacing.medium
+            horizontal = GlintTheme.spacing.lg,
+            vertical = GlintTheme.spacing.md
         )
         GlintButtonSize.Large -> PaddingValues(
-            horizontal = GlintTheme.spacing.extraLarge,
-            vertical = GlintTheme.spacing.large
+            horizontal = GlintTheme.spacing.xl,
+            vertical = GlintTheme.spacing.lg
         )
     }
     
@@ -64,9 +65,9 @@ fun GlintButton(
     }
     
     val minHeight = when (size) {
-        GlintButtonSize.Small -> 32.dp
-        GlintButtonSize.Medium -> 40.dp
-        GlintButtonSize.Large -> 48.dp
+        GlintButtonSize.Small -> GlintComponents.Button.heightSmall
+        GlintButtonSize.Medium -> GlintComponents.Button.heightMedium
+        GlintButtonSize.Large -> GlintComponents.Button.heightLarge
     }
     
     when (variant) {
@@ -75,7 +76,7 @@ fun GlintButton(
                 onClick = onClick,
                 modifier = modifier.defaultMinSize(minHeight = minHeight),
                 enabled = enabled,
-                shape = GlintTheme.shape.small,
+                shape = GlintTheme.shape.sm,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = GlintTheme.colorScheme.primary,
                     contentColor = GlintTheme.colorScheme.onPrimary,
@@ -97,13 +98,13 @@ fun GlintButton(
                 onClick = onClick,
                 modifier = modifier.defaultMinSize(minHeight = minHeight),
                 enabled = enabled,
-                shape = GlintTheme.shape.small,
+                shape = GlintTheme.shape.sm,
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = GlintTheme.colorScheme.primary,
                     disabledContentColor = GlintTheme.colorScheme.onSurfaceVariant
                 ),
                 border = BorderStroke(
-                    width = 1.dp,
+                    width = GlintComponents.Button.borderWidth,
                     color = if (enabled) GlintTheme.colorScheme.outline else GlintTheme.colorScheme.outlineVariant
                 ),
                 contentPadding = contentPadding,
@@ -121,7 +122,7 @@ fun GlintButton(
                 onClick = onClick,
                 modifier = modifier.defaultMinSize(minHeight = minHeight),
                 enabled = enabled,
-                shape = GlintTheme.shape.small,
+                shape = GlintTheme.shape.sm,
                 colors = ButtonDefaults.textButtonColors(
                     contentColor = GlintTheme.colorScheme.primary,
                     disabledContentColor = GlintTheme.colorScheme.onSurfaceVariant

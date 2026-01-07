@@ -90,7 +90,7 @@ fun GlintTextField(
                     maxLines = maxLines,
                     minLines = minLines,
                     interactionSource = interactionSource,
-                    shape = GlintTheme.shape.small,
+                    shape = GlintTheme.shape.sm,
                     colors = TextFieldDefaults.colors(
                         focusedTextColor = GlintTheme.colorScheme.onSurface,
                         unfocusedTextColor = GlintTheme.colorScheme.onSurfaceVariant,
@@ -141,7 +141,7 @@ fun GlintTextField(
                     maxLines = maxLines,
                     minLines = minLines,
                     interactionSource = interactionSource,
-                    shape = GlintTheme.shape.small,
+                    shape = GlintTheme.shape.sm,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedTextColor = GlintTheme.colorScheme.onSurface,
                         unfocusedTextColor = GlintTheme.colorScheme.onSurfaceVariant,

@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.derayane.glint.coreui.theme.GlintTheme
+import com.derayane.glint.coreui.tokens.GlintComponents
 
 /**
  * Glint Card using theme tokens only
@@ -40,21 +41,21 @@ fun GlintCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val padding = when (size) {
-        GlintCardSize.Small -> GlintTheme.spacing.small
-        GlintCardSize.Medium -> GlintTheme.spacing.medium
-        GlintCardSize.Large -> GlintTheme.spacing.large
+        GlintCardSize.Small -> GlintTheme.spacing.sm
+        GlintCardSize.Medium -> GlintTheme.spacing.md
+        GlintCardSize.Large -> GlintTheme.spacing.lg
     }
     
     val shape = when (size) {
-        GlintCardSize.Small -> GlintTheme.shape.small
-        GlintCardSize.Medium -> GlintTheme.shape.medium
-        GlintCardSize.Large -> GlintTheme.shape.large
+        GlintCardSize.Small -> GlintTheme.shape.sm
+        GlintCardSize.Medium -> GlintTheme.shape.md
+        GlintCardSize.Large -> GlintTheme.shape.lg
     }
     
     val elevation = when (size) {
-        GlintCardSize.Small -> 2.dp
-        GlintCardSize.Medium -> 4.dp
-        GlintCardSize.Large -> 8.dp
+        GlintCardSize.Small -> GlintComponents.Card.elevationLow
+        GlintCardSize.Medium -> GlintComponents.Card.elevationMedium
+        GlintCardSize.Large -> GlintComponents.Card.elevationHigh
     }
     
     when (variant) {
@@ -87,7 +88,7 @@ fun GlintCard(
                     contentColor = contentColor ?: GlintTheme.colorScheme.onSurface
                 ),
                 border = BorderStroke(
-                    width = 1.dp,
+                    width = GlintComponents.Card.borderWidth,
                     color = GlintTheme.colorScheme.outline
                 )
             ) {

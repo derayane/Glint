@@ -2,6 +2,8 @@ package com.derayane.glint.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
@@ -11,11 +13,14 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.derayane.glint.coreui.theme.GlintTheme
 import com.derayane.glint.coreui.tokens.GlintComponents
+import com.derayane.glint.coreui.tokens.GlintPrimaryIrishGreen
+import com.derayane.glint.coreui.tokens.GlintPrimaryPassionGreen
 
 /**
  * Glint Button using theme tokens only
@@ -43,6 +48,9 @@ fun GlintButton(
     size: GlintButtonSize = GlintButtonSize.Medium,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
+    val isFocused by interactionSource.collectIsFocusedAsState()
+    val isPressed by interactionSource.collectIsPressedAsState()
+    
     val contentPadding = when (size) {
         GlintButtonSize.Small -> PaddingValues(
             horizontal = GlintTheme.spacing.md,
@@ -72,13 +80,20 @@ fun GlintButton(
     
     when (variant) {
         GlintButtonVariant.Filled -> {
+            val containerColor = when {
+                !enabled -> GlintTheme.colorScheme.surfaceVariant
+                isPressed -> GlintPrimaryIrishGreen.base
+                isFocused -> GlintPrimaryIrishGreen.base
+                else -> GlintTheme.colorScheme.primary
+            }
+            
             Button(
                 onClick = onClick,
                 modifier = modifier.defaultMinSize(minHeight = minHeight),
                 enabled = enabled,
                 shape = GlintTheme.shape.sm,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = GlintTheme.colorScheme.primary,
+                    containerColor = containerColor,
                     contentColor = GlintTheme.colorScheme.onPrimary,
                     disabledContainerColor = GlintTheme.colorScheme.surfaceVariant,
                     disabledContentColor = GlintTheme.colorScheme.onSurfaceVariant
@@ -94,18 +109,33 @@ fun GlintButton(
         }
         
         GlintButtonVariant.Outlined -> {
+            val containerColor = when {
+                !enabled -> GlintTheme.colorScheme.surfaceVariant
+                isPressed -> GlintPrimaryIrishGreen.base
+                isFocused -> GlintPrimaryIrishGreen.base
+                else -> GlintTheme.colorScheme.surface
+            }
+            
+            val borderColor = when {
+                !enabled -> GlintTheme.colorScheme.outlineVariant
+                isPressed -> GlintPrimaryIrishGreen.base
+                isFocused -> GlintPrimaryPassionGreen.base
+                else -> GlintTheme.colorScheme.outline
+            }
+            
             OutlinedButton(
                 onClick = onClick,
                 modifier = modifier.defaultMinSize(minHeight = minHeight),
                 enabled = enabled,
                 shape = GlintTheme.shape.sm,
                 colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = containerColor,
                     contentColor = GlintTheme.colorScheme.primary,
                     disabledContentColor = GlintTheme.colorScheme.onSurfaceVariant
                 ),
                 border = BorderStroke(
                     width = GlintComponents.Button.borderWidth,
-                    color = if (enabled) GlintTheme.colorScheme.outline else GlintTheme.colorScheme.outlineVariant
+                    color = borderColor
                 ),
                 contentPadding = contentPadding,
                 interactionSource = interactionSource
@@ -118,12 +148,20 @@ fun GlintButton(
         }
         
         GlintButtonVariant.Text -> {
+            val containerColor = when {
+                !enabled -> GlintTheme.colorScheme.surfaceVariant
+                isPressed -> GlintPrimaryIrishGreen.base
+                isFocused -> GlintPrimaryIrishGreen.base
+                else -> GlintTheme.colorScheme.surface
+            }
+            
             TextButton(
                 onClick = onClick,
                 modifier = modifier.defaultMinSize(minHeight = minHeight),
                 enabled = enabled,
                 shape = GlintTheme.shape.sm,
                 colors = ButtonDefaults.textButtonColors(
+                    containerColor = containerColor,
                     contentColor = GlintTheme.colorScheme.primary,
                     disabledContentColor = GlintTheme.colorScheme.onSurfaceVariant
                 ),
@@ -189,6 +227,23 @@ fun GlintTextButton(
         modifier = modifier,
         enabled = enabled,
         variant = GlintButtonVariant.Text,
+        size = size
+    )
+}
+
+@Composable
+fun GlintButtonGhost(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    size: GlintButtonSize = GlintButtonSize.Medium
+) {
+    GlintTextButton(
+        text = text,
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
         size = size
     )
 }
